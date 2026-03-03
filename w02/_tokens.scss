@@ -1,0 +1,73 @@
+// _tokens.scss
+// Token csoportok a heti menü - étkezéstervező alkalmazáshoz
+// Modern farmhouse kitchen stílus, meleg, barátságos hangulat
+
+:root {
+  // 1. Színek
+  /* Alapszínek */
+  --color-bg: #f8f5f2; // világos háttér, meleg árnyalat
+  --color-surface: #fffaf6; // felületek, kártyák
+  --color-primary: #b77b57; // fő szín, fahéj-barna
+  --color-secondary: #e6b07c; // kiegészítő, világosabb narancs
+  --color-accent: #a3c48b; // zöld, frissesség
+  --color-error: #d9534f; // hibák
+  --color-success: #6ab04c; // siker
+  --color-text: #4a3c2a; // fő szöveg, sötét barna
+  --color-muted: #a89b8c; // halvány szöveg, ikonok
+  --color-border: #e0d6c9; // határvonalak
+
+  // 2. Tipográfia
+  /* Font családok */
+  --font-family-base: 'Nunito', 'Segoe UI', Arial, sans-serif;
+  --font-family-accent: 'Merriweather', serif;
+  /* Font méretek (fluid clamp) */
+  --font-size-xs: clamp(0.7rem, 0.65rem + 0.2vw, 0.8rem); // extra kicsi
+  --font-size-sm: clamp(0.8rem, 0.75rem + 0.3vw, 1rem); // kicsi
+  --font-size-md: clamp(1rem, 0.95rem + 0.5vw, 1.2rem); // alap
+  --font-size-lg: clamp(1.2rem, 1.1rem + 0.8vw, 1.5rem); // nagy
+  --font-size-xl: clamp(1.5rem, 1.3rem + 1.2vw, 2rem); // extra nagy
+  --font-size-xxl: clamp(2rem, 1.7rem + 2vw, 3rem); // hero méret
+  /* Font súlyok */
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  // 3. Térközök
+  --space-xxs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-xxl: 3rem;
+
+  // 4. Border radius
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-round: 999px;
+
+  // 5. Árnyékok
+  --shadow-xs: 0 1px 2px rgba(74, 60, 42, 0.05);
+  --shadow-sm: 0 2px 4px rgba(74, 60, 42, 0.08);
+  --shadow-md: 0 4px 8px rgba(74, 60, 42, 0.12);
+  --shadow-lg: 0 8px 16px rgba(74, 60, 42, 0.16);
+
+  // 6. Breakpoints
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 900px;
+  --breakpoint-lg: 1200px;
+  --breakpoint-xl: 1600px;
+
+  // 7. Transitions
+  --transition-fast: 0.15s ease-in;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease-out;
+
+  // 8. Z-index skála
+  --z-index-base: 1;
+  --z-index-dropdown: 10;
+  --z-index-modal: 100;
+  --z-index-toast: 1000;
+  --z-index-overlay: 1100;
+}

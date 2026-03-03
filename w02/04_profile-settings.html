@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heti Menü - Felhasználói Profil & Beállítások Modul</title>
+  <link rel="stylesheet" href="_tokens.css">
+  <style>
+    body {
+      background: var(--color-bg);
+      font-family: var(--font-family-base);
+      color: var(--color-text);
+      padding: var(--space-lg);
+    }
+    main {
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-lg);
+    }
+    h1 {
+      font-family: var(--font-family-accent);
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-lg);
+    }
+    .profile-section {
+      margin-bottom: var(--space-xl);
+    }
+    .profile-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    label {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+    }
+    input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      padding: var(--space-sm);
+      font-size: var(--font-size-md);
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-round);
+      object-fit: cover;
+      background: var(--color-muted);
+      margin-bottom: var(--space-md);
+    }
+    .diet-checkboxes {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .range-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    input[type="range"] {
+      width: 120px;
+    }
+    .profile-save {
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--radius-lg);
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      font-size: var(--font-size-lg);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      margin-top: var(--space-md);
+    }
+    .profile-save:hover {
+      background: var(--color-accent);
+    }
+    .toast {
+      background: var(--color-success);
+      color: #fff;
+      border-radius: var(--radius-md);
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--font-size-md);
+      margin-top: var(--space-md);
+      text-align: center;
+    }
+    .settings-section {
+      margin-bottom: var(--space-xl);
+    }
+    .settings-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .settings-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .settings-label {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+      min-width: 120px;
+    }
+    .settings-select {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      padding: var(--space-sm);
+      font-size: var(--font-size-md);
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+    .account-actions {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      justify-content: flex-end;
+    }
+    .account-btn {
+      background: var(--color-secondary);
+      color: var(--color-text);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-md);
+      padding: var(--space-sm) var(--space-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .account-btn:hover {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .danger {
+      background: var(--color-error);
+      color: #fff;
+    }
+    .danger:hover {
+      background: var(--color-accent);
+    }
+  </style>
+</head>
+<body>
+  <div style="margin-bottom: var(--space-lg); text-align: right;">
+    <button id="theme-toggle" style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--color-primary); color: #fff; border: none; font-size: var(--font-size-md); cursor: pointer; transition: var(--transition-fast);">Sötét mód</button>
+  </div>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn.addEventListener('click', () => {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      btn.textContent = isDark ? 'Sötét mód' : 'Világos mód';
+    });
+    document.documentElement.setAttribute('data-theme', 'light');
+  </script>
+  <main>
+    <h1>Profil & Beállítások</h1>
+    <!-- Profil szekció -->
+    <section class="profile-section">
+      <form class="profile-form">
+        <img class="profile-avatar" src="https://via.placeholder.com/80x80?text=Avatar" alt="Profilkép">
+        <div class="form-group">
+          <label for="name">Név</label>
+          <input type="text" id="name" name="name" value="Minta Felhasználó">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" value="minta@email.hu">
+        </div>
+        <div class="form-group">
+          <label for="password">Jelszó</label>
+          <input type="password" id="password" name="password" placeholder="Új jelszó">
+        </div>
+        <div class="form-group">
+          <label>Diéta</label>
+          <div class="diet-checkboxes">
+            <label><input type="checkbox"> Vegetáriánus</label>
+            <label><input type="checkbox"> Vegán</label>
+            <label><input type="checkbox"> Gluténmentes</label>
+            <label><input type="checkbox"> Laktózmentes</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="calorie">Napi kalória cél</label>
+          <div class="range-group">
+            <input type="number" id="calorie" name="calorie" min="1200" max="3500" value="2000">
+            <input type="range" min="1200" max="3500" value="2000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="household">Háztartás mérete</label>
+          <input type="number" id="household" name="household" min="1" max="8" value="4">
+        </div>
+        <button class="profile-save" type="submit">Mentés</button>
+        <div class="toast" style="display:none;">Profil mentve ✓</div>
+      </form>
+    </section>
+    <!-- Beállítások szekció -->
+    <section class="settings-section">
+      <div class="settings-group">
+        <div class="settings-row">
+          <span class="settings-label">Megjelenés</span>
+          <select class="settings-select">
+            <option>Világos</option>
+            <option>Sötét</option>
+            <option>Rendszer</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <span class="settings-label">Mértékegység</span>
+          <select class="settings-select">
+            <option>Metrikus</option>
+            <option>Angolszász</option>
+          </select>
+        </div>
+      </div>
+    </section>
+    <!-- Fiók akciók -->
+    <div class="account-actions">
+      <button class="account-btn">Kijelentkezés</button>
+      <button class="account-btn danger">Fiók törlése</button>
+    </div>
+  </main>
+</body>
+</html>

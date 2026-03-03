@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heti Menü - Bevásárlólista Generátor Modul</title>
+  <link rel="stylesheet" href="_tokens.css">
+  <style>
+    body {
+      background: var(--color-bg);
+      font-family: var(--font-family-base);
+      color: var(--color-text);
+      padding: var(--space-lg);
+    }
+    main {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-lg);
+    }
+    header {
+      margin-bottom: var(--space-lg);
+    }
+    h1 {
+      font-family: var(--font-family-accent);
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-sm);
+    }
+    .list-actions {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+      justify-content: flex-end;
+    }
+    .action-btn {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      font-size: var(--font-size-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .action-btn:hover {
+      background: var(--color-accent);
+    }
+    .progress-bar {
+      width: 100%;
+      height: 16px;
+      background: var(--color-border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-md);
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      background: var(--color-success);
+      transition: width var(--transition-normal);
+    }
+    .progress-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-muted);
+      margin-bottom: var(--space-xs);
+      text-align: right;
+    }
+    .shopping-section {
+      margin-bottom: var(--space-lg);
+      border-radius: var(--radius-md);
+      background: var(--color-bg);
+      box-shadow: var(--shadow-xs);
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-sm) var(--space-md);
+      font-family: var(--font-family-accent);
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      background: var(--color-surface);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      cursor: pointer;
+    }
+    .section-header .section-progress {
+      font-size: var(--font-size-xs);
+      color: var(--color-muted);
+    }
+    .section-items {
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .shopping-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-xs) 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: var(--font-size-md);
+      transition: background var(--transition-fast);
+    }
+    .shopping-item:last-child {
+      border-bottom: none;
+    }
+    .shopping-item.checked {
+      text-decoration: line-through;
+      color: var(--color-muted);
+      opacity: 0.7;
+      background: var(--color-border);
+    }
+    .item-checkbox {
+      accent-color: var(--color-success);
+      width: 1.2em;
+      height: 1.2em;
+      cursor: pointer;
+    }
+    .item-name {
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .item-amount {
+      min-width: 60px;
+      text-align: right;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      padding: 0 var(--space-xs);
+      background: var(--color-surface);
+      border: 1px solid transparent;
+      transition: border var(--transition-fast);
+    }
+    .item-amount:focus {
+      border: 1px solid var(--color-primary);
+      outline: none;
+    }
+    .item-delete {
+      background: var(--color-error);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-sm);
+      padding: var(--space-xxs) var(--space-xs);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .item-delete:hover {
+      background: var(--color-accent);
+    }
+    .add-item-row {
+      display: flex;
+      gap: var(--space-xs);
+      align-items: center;
+      padding: var(--space-sm) var(--space-md);
+      border-top: 1px solid var(--color-border);
+      background: var(--color-surface);
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+    }
+    .add-item-input, .add-item-select, .add-item-amount {
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      padding: var(--space-xs);
+      font-size: var(--font-size-sm);
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+    .add-item-btn {
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-sm);
+      padding: var(--space-xs) var(--space-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .add-item-btn:hover {
+      background: var(--color-accent);
+    }
+    .list-footer {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: flex-end;
+      margin-top: var(--space-lg);
+    }
+    .footer-btn {
+      background: var(--color-secondary);
+      color: var(--color-text);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-md);
+      padding: var(--space-sm) var(--space-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .footer-btn:hover {
+      background: var(--color-accent);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div style="margin-bottom: var(--space-lg); text-align: right;">
+    <button id="theme-toggle" style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--color-primary); color: #fff; border: none; font-size: var(--font-size-md); cursor: pointer; transition: var(--transition-fast);">Sötét mód</button>
+  </div>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn.addEventListener('click', () => {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      btn.textContent = isDark ? 'Sötét mód' : 'Világos mód';
+    });
+    document.documentElement.setAttribute('data-theme', 'light');
+  </script>
+  <main>
+    <header>
+      <h1>Bevásárlólista</h1>
+      <div class="list-actions">
+        <button class="action-btn">Lista generálása</button>
+        <button class="action-btn">Lista törlése</button>
+      </div>
+    </header>
+    <div class="progress-label">12 / 18 tétel kész</div>
+    <div class="progress-bar" aria-label="Haladás">
+      <div class="progress-bar-inner" style="width: 66%;"></div>
+    </div>
+    <!-- Szekciók (accordion) -->
+    <section class="shopping-section">
+      <div class="section-header" tabindex="0" aria-expanded="true">
+        🥬 Zöldség & Gyümölcs <span class="section-progress">3/5 ✓</span>
+      </div>
+      <div class="section-items">
+        <div class="shopping-item">
+          <input class="item-checkbox" type="checkbox" checked>
+          <span class="item-name">Paradicsom</span>
+          <span class="item-amount" tabindex="0">4 db</span>
+          <button class="item-delete" aria-label="Tétel törlése">🗑️</button>
+        </div>
+        <div class="shopping-item checked">
+          <input class="item-checkbox" type="checkbox" checked>
+          <span class="item-name">Uborka</span>
+          <span class="item-amount" tabindex="0">2 db</span>
+          <button class="item-delete" aria-label="Tétel törlése">🗑️</button>
+        </div>
+        <div class="shopping-item">
+          <input class="item-checkbox" type="checkbox">
+          <span class="item-name">Paprika</span>
+          <span class="item-amount" tabindex="0">3 db</span>
+          <button class="item-delete" aria-label="Tétel törlése">🗑️</button>
+        </div>
+      </div>
+      <div class="add-item-row">
+        <input class="add-item-input" type="text" placeholder="Új tétel neve">
+        <input class="add-item-amount" type="text" placeholder="Mennyiség">
+        <span class="add-item-unit">db</span>
+        <button class="add-item-btn">Hozzáad</button>
+      </div>
+    </section>
+    <section class="shopping-section">
+      <div class="section-header" tabindex="0" aria-expanded="true">
+        🥩 Hús & Hal <span class="section-progress">1/2 ✓</span>
+      </div>
+      <div class="section-items">
+        <div class="shopping-item">
+          <input class="item-checkbox" type="checkbox">
+          <span class="item-name">Csirkemell</span>
+          <span class="item-amount" tabindex="0">500 g</span>
+          <button class="item-delete" aria-label="Tétel törlése">🗑️</button>
+        </div>
+        <div class="shopping-item checked">
+          <input class="item-checkbox" type="checkbox" checked>
+          <span class="item-name">Lazac</span>
+          <span class="item-amount" tabindex="0">2 szelet</span>
+          <button class="item-delete" aria-label="Tétel törlése">🗑️</button>
+        </div>
+      </div>
+      <div class="add-item-row">
+        <input class="add-item-input" type="text" placeholder="Új tétel neve">
+        <input class="add-item-amount" type="text" placeholder="Mennyiség">
+        <span class="add-item-unit">g</span>
+        <button class="add-item-btn">Hozzáad</button>
+      </div>
+    </section>
+    <!-- ... további szekciók ... -->
+    <div class="list-footer">
+      <button class="footer-btn">Másolás</button>
+      <button class="footer-btn">Megosztás</button>
+      <button class="footer-btn">Nyomtatás</button>
+      <button class="footer-btn">Nullázás</button>
+    </div>
+  </main>
+</body>
+</html>
