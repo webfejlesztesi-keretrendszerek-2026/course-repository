@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heti Menü - Heti Menü Tervező Modul</title>
+  <link rel="stylesheet" href="_tokens.css">
+  <style>
+    body {
+      background: var(--color-bg);
+      font-family: var(--font-family-base);
+      color: var(--color-text);
+      padding: var(--space-lg);
+    }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-lg);
+    }
+    header {
+      margin-bottom: var(--space-lg);
+    }
+    h1 {
+      font-family: var(--font-family-accent);
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-sm);
+    }
+    .week-switcher {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+      justify-content: center;
+    }
+    .week-btn {
+      background: var(--color-secondary);
+      color: var(--color-text);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: var(--space-xs) var(--space-md);
+      font-size: var(--font-size-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .week-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      font-weight: var(--font-weight-bold);
+    }
+    .week-btn:hover {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .menu-actions {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+      justify-content: flex-end;
+    }
+    .action-btn {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      font-size: var(--font-size-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .action-btn:hover {
+      background: var(--color-accent);
+    }
+    /* Naptár grid */
+    .calendar-grid {
+      display: none;
+    }
+    @media (min-width: 900px) {
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: var(--space-md);
+        margin-bottom: var(--space-lg);
+      }
+    }
+    .day-column {
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xs);
+      padding: var(--space-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      min-width: 0;
+    }
+    .day-header {
+      font-family: var(--font-family-accent);
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-xs);
+      text-align: center;
+    }
+    .day-header.current {
+      border-bottom: 2px solid var(--color-primary);
+      color: var(--color-primary);
+    }
+    .meal-slot {
+      background: var(--color-surface);
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-md);
+      min-height: 70px;
+      margin-bottom: var(--space-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-sm);
+      color: var(--color-muted);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      position: relative;
+    }
+    .meal-slot.filled {
+      border: 1px solid var(--color-border);
+      background: var(--color-bg);
+      color: var(--color-text);
+      min-height: 110px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--space-xs);
+    }
+    .mini-recipe {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      width: 100%;
+    }
+    .mini-recipe-img {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: var(--color-muted);
+    }
+    .mini-recipe-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .mini-recipe-title {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mini-recipe-meta {
+      font-size: var(--font-size-xs);
+      color: var(--color-muted);
+    }
+    .slot-actions {
+      display: flex;
+      gap: var(--space-xs);
+      margin-top: var(--space-xs);
+    }
+    .slot-btn {
+      background: var(--color-secondary);
+      color: var(--color-text);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-xs);
+      padding: var(--space-xxs) var(--space-xs);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .slot-btn:hover {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .day-summary {
+      font-size: var(--font-size-xs);
+      color: var(--color-muted);
+      text-align: center;
+      margin-top: var(--space-xs);
+    }
+    .summary-ok { color: var(--color-success); }
+    .summary-warn { color: var(--color-secondary); }
+    .summary-err { color: var(--color-error); }
+    /* Mobile accordion */
+    .mobile-days {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    @media (min-width: 900px) {
+      .mobile-days { display: none; }
+    }
+    .accordion-day {
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xs);
+      padding: var(--space-sm);
+    }
+    .accordion-header {
+      font-family: var(--font-family-accent);
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-bold);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      color: var(--color-primary);
+    }
+    .accordion-content {
+      margin-top: var(--space-xs);
+    }
+    /* Mentés állapot */
+    .save-status {
+      font-size: var(--font-size-xs);
+      color: var(--color-muted);
+      text-align: right;
+      margin-bottom: var(--space-xs);
+    }
+    .save-status.ok { color: var(--color-success); }
+    .save-status.saving { color: var(--color-accent); }
+    .save-status.err { color: var(--color-error); }
+    /* Heti összesítő */
+    .week-summary {
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xs);
+      padding: var(--space-md);
+      margin-bottom: var(--space-md);
+      display: flex;
+      gap: var(--space-lg);
+      justify-content: center;
+      font-size: var(--font-size-md);
+      color: var(--color-text);
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Ugrás a tartalomra</a>
+  <div style="margin-bottom: var(--space-lg); text-align: right;">
+    <button id="theme-toggle" style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--color-primary); color: #fff; border: none; font-size: var(--font-size-md); cursor: pointer; transition: var(--transition-fast);">Sötét mód</button>
+  </div>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn.addEventListener('click', () => {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      btn.textContent = isDark ? 'Sötét mód' : 'Világos mód';
+    });
+    document.documentElement.setAttribute('data-theme', 'light');
+
+    // Billentyűzetes navigáció: Enter/Space aktiválás a mini-recipe kártyákon
+    document.querySelectorAll('.mini-recipe').forEach(card => {
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'group');
+      card.setAttribute('aria-label', 'Recept kártya');
+      card.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          const btn = card.parentElement.querySelector('.slot-btn');
+          if (btn) btn.focus();
+          e.preventDefault();
+        }
+      });
+    });
+  </script>
+  <header>
+    <nav aria-label="Fő navigáció">
+      <!-- Ide kerülhet globális navigáció, ha lesz -->
+    </nav>
+  </header>
+  <main id="main-content">
+    <header>
+      <h1>Heti Menü Tervező</h1>
+      <nav class="week-switcher" aria-label="Hét váltása">
+        <button class="week-btn">← Előző hét</button>
+        <button class="week-btn active">2026. február 23. – 29.</button>
+        <button class="week-btn">Következő hét →</button>
+      </nav>
+      <div class="menu-actions">
+        <button class="action-btn">Hét másolása</button>
+        <button class="action-btn">Hét törlése</button>
+      </div>
+      <div class="save-status ok">✓ Mentve • Utoljára mentve: 14:32</div>
+    </header>
+    <section class="week-summary" aria-label="Heti összesítő">
+      <div>Átlag kalória/nap: <span class="summary-ok">1850</span></div>
+      <div>Összes főzési idő: <span>4 óra 20 perc</span></div>
+    </section>
+    <!-- Desktop/Tablet grid nézet -->
+    <section class="calendar-grid" aria-label="Heti naptár">
+      <!-- 7 nap oszlop -->
+      <div class="day-column">
+        <div class="day-header current">Hétfő</div>
+        <div class="meal-slot">+ Reggeli</div>
+        <div class="meal-slot filled">
+          <div class="mini-recipe" style="flex-direction: column; align-items: stretch; width: 100%;" tabindex="0" role="group" aria-label="Recept kártya">
+            <img class="mini-recipe-img" style="width: 100%; height: 60px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: var(--space-xs);" src="https://via.placeholder.com/120x60?text=Kép" alt="Tojásrántotta - étel fotó" loading="lazy">
+            <div class="mini-recipe-title">Tojásrántotta</div>
+            <div class="mini-recipe-meta">15 perc • 320 kcal</div>
+          </div>
+          <div class="slot-actions">
+            <button class="slot-btn">Csere</button>
+            <button class="slot-btn">Törlés</button>
+          </div>
+        </div>
+        <div class="meal-slot">+ Ebéd</div>
+        <div class="meal-slot">+ Vacsora</div>
+        <div class="day-summary summary-ok">Össz. kalória: 1850 • Idő: 45 perc</div>
+      </div>
+      <div class="day-column">
+        <div class="day-header">Kedd</div>
+        <div class="meal-slot">+ Reggeli</div>
+        <div class="meal-slot">+ Ebéd</div>
+        <div class="meal-slot">+ Vacsora</div>
+        <div class="day-summary summary-ok">Össz. kalória: 1700 • Idő: 40 perc</div>
+      </div>
+      <div class="day-column">
+        <div class="day-header">Szerda</div>
+        <div class="meal-slot">+ Reggeli</div>
+        <div class="meal-slot">+ Ebéd</div>
+        <div class="meal-slot">+ Vacsora</div>
+        <div class="day-summary summary-ok">Össz. kalória: 1800 • Idő: 50 perc</div>
+      </div>
+      <div class="day-column">
+        <div class="day-header">Csütörtök</div>
+        <div class="meal-slot">+ Reggeli</div>
+        <div class="meal-slot">+ Ebéd</div>
+        <div class="meal-slot">+ Vacsora</div>
+        <div class="day-summary summary-ok">Össz. kalória: 1900 • Idő: 55 perc</div>
+      </div>
+      <div class="day-column">
+        <div class="day-header">Péntek</div>
+        <div class="meal-slot">+ Reggeli</div>
+        <div class="meal-slot">+ Ebéd</div>
+        <div class="meal-slot">+ Vacsora</div>
+        <div class="day-summary summary-ok">Össz. kalória: 1750 • Idő: 42 perc</div>
+      </div>
+      <div class="day-column">
+        <div class="day-header">Szombat</div>
+        <div class="meal-slot">+ Reggeli</div>
+        <div class="meal-slot">+ Ebéd</div>
+        <div class="meal-slot">+ Vacsora</div>
+        <div class="day-summary summary-ok">Össz. kalória: 2000 • Idő: 60 perc</div>
+      </div>
+      <div class="day-column">
+        <div class="day-header">Vasárnap</div>
+        <div class="meal-slot">+ Reggeli</div>
+        <div class="meal-slot">+ Ebéd</div>
+        <div class="meal-slot">+ Vacsora</div>
+        <div class="day-summary summary-ok">Össz. kalória: 1600 • Idő: 38 perc</div>
+      </div>
+    </section>
+    <!-- Mobil accordion nézet -->
+    <section class="mobile-days" aria-label="Heti naptár (mobil)">
+      <div class="accordion-day">
+        <div class="accordion-header">Hétfő <span>Össz. kalória: 1850</span></div>
+        <div class="accordion-content">
+          <div class="meal-slot">+ Reggeli</div>
+          <div class="meal-slot filled">
+            <div class="mini-recipe" tabindex="0" role="group" aria-label="Recept kártya">
+              <img class="mini-recipe-img" src="https://via.placeholder.com/48x48?text=Kép" alt="Tojásrántotta - étel fotó" loading="lazy">
+              <div class="mini-recipe-info">
+                <div class="mini-recipe-title">Tojásrántotta</div>
+                <div class="mini-recipe-meta">15 perc • 320 kcal</div>
+              </div>
+            </div>
+            <div class="slot-actions">
+              <button class="slot-btn">Csere</button>
+              <button class="slot-btn">Törlés</button>
+            </div>
+          </div>
+          <div class="meal-slot">+ Vacsora</div>
+        </div>
+      </div>
+      <div class="accordion-day">
+        <div class="accordion-header">Kedd <span>Össz. kalória: 1700</span></div>
+        <div class="accordion-content">
+          <div class="meal-slot">+ Reggeli</div>
+          <div class="meal-slot">+ Ebéd</div>
+          <div class="meal-slot">+ Vacsora</div>
+        </div>
+      </div>
+      <div class="accordion-day">
+        <div class="accordion-header">Szerda <span>Össz. kalória: 1800</span></div>
+        <div class="accordion-content">
+          <div class="meal-slot">+ Reggeli</div>
+          <div class="meal-slot">+ Ebéd</div>
+          <div class="meal-slot">+ Vacsora</div>
+        </div>
+      </div>
+      <div class="accordion-day">
+        <div class="accordion-header">Csütörtök <span>Össz. kalória: 1900</span></div>
+        <div class="accordion-content">
+          <div class="meal-slot">+ Reggeli</div>
+          <div class="meal-slot">+ Ebéd</div>
+          <div class="meal-slot">+ Vacsora</div>
+        </div>
+      </div>
+      <div class="accordion-day">
+        <div class="accordion-header">Péntek <span>Össz. kalória: 1750</span></div>
+        <div class="accordion-content">
+          <div class="meal-slot">+ Reggeli</div>
+          <div class="meal-slot">+ Ebéd</div>
+          <div class="meal-slot">+ Vacsora</div>
+        </div>
+      </div>
+      <div class="accordion-day">
+        <div class="accordion-header">Szombat <span>Össz. kalória: 2000</span></div>
+        <div class="accordion-content">
+          <div class="meal-slot">+ Reggeli</div>
+          <div class="meal-slot">+ Ebéd</div>
+          <div class="meal-slot">+ Vacsora</div>
+        </div>
+      </div>
+      <div class="accordion-day">
+        <div class="accordion-header">Vasárnap <span>Össz. kalória: 1600</span></div>
+        <div class="accordion-content">
+          <div class="meal-slot">+ Reggeli</div>
+          <div class="meal-slot">+ Ebéd</div>
+          <div class="meal-slot">+ Vacsora</div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <nav aria-label="Lábjegyzet linkek">
+      <!-- Ide kerülhetnek lábjegyzet navigációs elemek -->
+    </nav>
+    <small>&copy; 2026 Heti Menü</small>
+  </footer>
+</body>
+</html>

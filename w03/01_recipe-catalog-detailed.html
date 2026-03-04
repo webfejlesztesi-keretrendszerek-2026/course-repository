@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heti Menü - Recept Katalógus Modul (Részletes UI/UX)</title>
+  <link rel="stylesheet" href="_tokens.css">
+  <style>
+    body {
+      background: var(--color-bg);
+      font-family: var(--font-family-base);
+      color: var(--color-text);
+      padding: var(--space-lg);
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-lg);
+    }
+    header {
+      margin-bottom: var(--space-lg);
+    }
+    h1 {
+      font-family: var(--font-family-accent);
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-sm);
+    }
+    .header-actions {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .action-btn {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      font-size: var(--font-size-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .action-btn:hover {
+      background: var(--color-accent);
+    }
+    .search-bar {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .search-input {
+      flex: 1;
+      padding: var(--space-sm);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      font-size: var(--font-size-md);
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+    .search-clear {
+      background: var(--color-error);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-md);
+      padding: 0 var(--space-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .search-clear:hover {
+      background: var(--color-accent);
+    }
+    .search-button {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      font-size: var(--font-size-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .search-button:hover {
+      background: var(--color-accent);
+    }
+    .result-count {
+      font-size: var(--font-size-sm);
+      color: var(--color-muted);
+      margin-bottom: var(--space-xs);
+    }
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .filter-chip {
+      background: var(--color-secondary);
+      color: var(--color-text);
+      border-radius: var(--radius-md);
+      padding: var(--space-xs) var(--space-sm);
+      font-size: var(--font-size-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .filter-chip.active {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .filter-clear {
+      background: var(--color-error);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-sm);
+      padding: var(--space-xs) var(--space-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .filter-clear:hover {
+      background: var(--color-accent);
+    }
+    .sort-bar {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+      align-items: center;
+    }
+    .sort-select {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      font-size: var(--font-size-md);
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    @media (min-width: 600px) {
+      .recipe-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (min-width: 1100px) {
+      .recipe-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+    .recipe-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-lg) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--color-border);
+      transition: var(--transition-normal);
+      position: relative;
+      min-height: 370px;
+      overflow: hidden;
+    }
+    .recipe-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-6px) scale(1.02);
+      z-index: 2;
+    }
+    .recipe-image {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--color-muted);
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      margin-bottom: var(--space-md);
+      min-height: 140px;
+      max-height: 180px;
+      display: block;
+    }
+    .recipe-badges {
+      display: flex;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-xs);
+      flex-wrap: wrap;
+    }
+    .badge {
+      background: var(--color-accent);
+      color: #fff;
+      border-radius: var(--radius-round);
+      padding: var(--space-xxs) var(--space-sm);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.02em;
+      box-shadow: var(--shadow-xs);
+      display: inline-block;
+    }
+    .badge.own {
+      background: var(--color-primary);
+    }
+    .recipe-title {
+      font-family: var(--font-family-accent);
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+      margin-bottom: var(--space-xs);
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .recipe-meta {
+      font-size: var(--font-size-sm);
+      color: var(--color-muted);
+      margin-bottom: var(--space-xs);
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .recipe-meta span {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xxs);
+    }
+    .recipe-desc {
+      font-size: var(--font-size-md);
+      color: var(--color-text);
+      margin-bottom: var(--space-sm);
+      flex: 1 1 auto;
+      line-height: 1.5;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .recipe-actions {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-xs);
+    }
+    .recipe-action-btn {
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--radius-md);
+      background: var(--color-secondary);
+      color: var(--color-text);
+      border: none;
+      font-size: var(--font-size-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      font-weight: var(--font-weight-bold);
+      box-shadow: var(--shadow-xs);
+    }
+    .recipe-action-btn:hover {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-xl);
+      color: var(--color-muted);
+      font-size: var(--font-size-lg);
+    }
+    .empty-state img {
+      width: 120px;
+      margin-bottom: var(--space-md);
+    }
+    .empty-state .cta-btn {
+      margin-top: var(--space-md);
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--radius-lg);
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      font-size: var(--font-size-lg);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .empty-state .cta-btn:hover {
+      background: var(--color-accent);
+    }
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      z-index: 1000;
+      padding: 0.75rem 1.5rem;
+      background: var(--color-primary);
+      color: var(--color-on-primary, #fff);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+    :focus-visible {
+      outline: 2px solid var(--color-focus, #1a73e8);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+
+
+<body>
+  <a class="skip-link" href="#main-content">Ugrás a tartalomra</a>
+  <div style="margin-bottom: var(--space-lg); text-align: right;">
+    <button id="theme-toggle" style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--color-primary); color: #fff; border: none; font-size: var(--font-size-md); cursor: pointer; transition: var(--transition-fast);">Sötét mód</button>
+  </div>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn.addEventListener('click', () => {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      btn.textContent = isDark ? 'Sötét mód' : 'Világos mód';
+    });
+    document.documentElement.setAttribute('data-theme', 'light');
+
+    // Billentyűzetes navigáció: Enter/Space aktiválás a recept kártyákon
+    document.querySelectorAll('[data-card]').forEach(card => {
+      card.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          // Fókusz az első akciógombra
+          const btn = card.querySelector('.recipe-action-btn');
+          if (btn) btn.focus();
+          e.preventDefault();
+        }
+      });
+    });
+  </script>
+  <header>
+    <nav aria-label="Fő navigáció">
+      <!-- Ide kerülhet globális navigáció, ha lesz -->
+    </nav>
+  </header>
+  <main id="main-content">
+    <header>
+      <h1>Recept Katalógus</h1>
+      <nav class="header-actions" aria-label="Modul akciók">
+        <button class="action-btn">Új recept hozzáadása</button>
+        <button class="action-btn">Kategóriák</button>
+      </nav>
+    </header>
+    <section aria-label="Keresés és szűrés">
+      <form class="search-bar" role="search">
+        <input class="search-input" type="text" placeholder="Keresés a receptek között..." aria-label="Keresés">
+        <button class="search-clear" type="button" aria-label="Kereső törlése">×</button>
+        <button class="search-button" type="submit">Keresés</button>
+      </form>
+      <div class="result-count" aria-live="polite">Találatok: 2</div>
+      <div class="filter-bar" role="group" aria-label="Szűrők">
+        <button class="filter-chip active">Leves</button>
+        <button class="filter-chip">Főétel</button>
+        <button class="filter-chip">Könnyű</button>
+        <button class="filter-chip">Vegetáriánus</button>
+        <button class="filter-clear" type="button">Mind törlése</button>
+      </div>
+      <div class="sort-bar">
+        <label for="sort-select">Rendezés:</label>
+        <select class="sort-select" id="sort-select">
+          <option>Név (A–Z)</option>
+          <option>Név (Z–A)</option>
+          <option>Elkészítési idő</option>
+          <option>Kalória</option>
+          <option>Legújabb</option>
+        </select>
+      </div>
+    </section>
+    <section aria-label="Recept lista">
+      <div class="recipe-grid">
+        <!-- Recept kártya minta -->
+        <article class="recipe-card" tabindex="0" role="group" aria-label="Recept kártya" data-card>
+          <img class="recipe-image" src="https://via.placeholder.com/320x160?text=Recept+Kép" alt="Minta recept neve - étel fotó" loading="lazy">
+          <div class="recipe-badges">
+            <span class="badge">Leves</span>
+            <span class="badge own">Saját</span>
+          </div>
+          <div class="recipe-title">Minta recept neve</div>
+          <div class="recipe-meta">Elkészítési idő: 30 perc | Kalória: 320 | Nehézség: Könnyű</div>
+          <div class="recipe-desc">Ez egy rövid leírás a recepthez...</div>
+          <div class="recipe-actions">
+            <button class="recipe-action-btn">Megtekintés</button>
+            <button class="recipe-action-btn">Hozzáadás a menühöz</button>
+          </div>
+        </article>
+        <article class="recipe-card" tabindex="0" role="group" aria-label="Recept kártya" data-card>
+          <img class="recipe-image" src="https://via.placeholder.com/320x160?text=Recept+Kép" alt="Másik recept - étel fotó" loading="lazy">
+          <div class="recipe-badges">
+            <span class="badge">Főétel</span>
+          </div>
+          <div class="recipe-title">Másik recept</div>
+          <div class="recipe-meta">Elkészítési idő: 45 perc | Kalória: 410 | Nehézség: Közepes</div>
+          <div class="recipe-desc">Ez egy rövid leírás a recepthez...</div>
+          <div class="recipe-actions">
+            <button class="recipe-action-btn">Megtekintés</button>
+            <button class="recipe-action-btn">Hozzáadás a menühöz</button>
+          </div>
+        </article>
+      </div>
+      <!-- Üres állapot minta -->
+      <div class="empty-state" style="display:none;">
+        <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="Üres katalógus illusztráció" loading="lazy">
+        <div>Még nincs recepted!</div>
+        <button class="cta-btn">Hozd létre az első recepted!</button>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <nav aria-label="Lábjegyzet linkek">
+      <!-- Ide kerülhetnek lábjegyzet navigációs elemek -->
+    </nav>
+    <small>&copy; 2026 Heti Menü</small>
+  </footer>
+</body>
+</html>
