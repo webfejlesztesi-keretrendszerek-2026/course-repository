@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heti Menü - Design Token Demo</title>
+  <link rel="stylesheet" href="_tokens.css">
+  <style>
+    body {
+      background: var(--color-bg);
+      font-family: var(--font-family-base);
+      color: var(--color-text);
+      padding: var(--space-lg);
+    }
+    h1 {
+      font-family: var(--font-family-accent);
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-lg);
+    }
+    .token-group {
+      margin-bottom: var(--space-xl);
+    }
+    .token-group h2 {
+      font-family: var(--font-family-accent);
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-md);
+    }
+    .swatch-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 120px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--space-sm);
+      font-size: var(--font-size-sm);
+      border: 1px solid var(--color-border);
+    }
+    .swatch-label {
+      margin-top: var(--space-xs);
+      font-size: var(--font-size-xs);
+      color: var(--color-muted);
+    }
+    /* Színminták */
+    .bg { background: var(--color-bg); }
+    .surface { background: var(--color-surface); }
+    .primary { background: var(--color-primary); color: #fff; }
+    .secondary { background: var(--color-secondary); }
+    .accent { background: var(--color-accent); }
+    .error { background: var(--color-error); color: #fff; }
+    .success { background: var(--color-success); color: #fff; }
+    .text { background: var(--color-text); color: #fff; }
+    .muted { background: var(--color-muted); }
+    .border { background: var(--color-border); }
+    /* Border radius minták */
+    .radius-sm { border-radius: var(--radius-sm); }
+    .radius-md { border-radius: var(--radius-md); }
+    .radius-lg { border-radius: var(--radius-lg); }
+    .radius-round { border-radius: var(--radius-round); }
+    /* Árnyék minták */
+    .shadow-xs { box-shadow: var(--shadow-xs); }
+    .shadow-sm { box-shadow: var(--shadow-sm); }
+    .shadow-md { box-shadow: var(--shadow-md); }
+    .shadow-lg { box-shadow: var(--shadow-lg); }
+    /* Térköz minták */
+    .space-demo {
+      display: flex;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-md);
+    }
+    .space-box {
+      width: 40px;
+      height: 40px;
+      background: var(--color-accent);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text);
+      font-size: var(--font-size-xs);
+    }
+    /* Tipográfia minták */
+    .font-demo {
+      margin-bottom: var(--space-md);
+    }
+    .font-base { font-family: var(--font-family-base); }
+    .font-accent { font-family: var(--font-family-accent); }
+    .font-xs { font-size: var(--font-size-xs); }
+    .font-sm { font-size: var(--font-size-sm); }
+    .font-md { font-size: var(--font-size-md); }
+    .font-lg { font-size: var(--font-size-lg); }
+    .font-xl { font-size: var(--font-size-xl); }
+    .font-xxl { font-size: var(--font-size-xxl); }
+    /* Fluid font-size tokenek clamp()-pel, lásd _tokens.scss */
+    .font-bold { font-weight: var(--font-weight-bold); }
+    .font-normal { font-weight: var(--font-weight-normal); }
+    /* Breakpoint minták */
+    .breakpoint-demo {
+      margin-bottom: var(--space-md);
+      font-size: var(--font-size-sm);
+      color: var(--color-muted);
+    }
+    /* Transition minták */
+    .transition-demo {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .transition-box {
+      width: 60px;
+      height: 60px;
+      background: var(--color-primary);
+      border-radius: var(--radius-md);
+      transition: var(--transition-normal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: pointer;
+    }
+    .transition-box:hover {
+      background: var(--color-accent);
+      transform: scale(1.15);
+      transition: var(--transition-fast);
+    }
+    /* Z-index minták */
+    .zindex-demo {
+      position: relative;
+      height: 80px;
+      margin-bottom: var(--space-md);
+    }
+    .zindex-box {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: var(--font-size-sm);
+    }
+    .z-base { background: var(--color-primary); left: 0; z-index: var(--z-index-base); }
+    .z-dropdown { background: var(--color-secondary); left: 30px; z-index: var(--z-index-dropdown); }
+    .z-modal { background: var(--color-error); left: 60px; z-index: var(--z-index-modal); }
+    .z-toast { background: var(--color-success); left: 90px; z-index: var(--z-index-toast); }
+    .z-overlay { background: var(--color-accent); left: 120px; z-index: var(--z-index-overlay); }
+  </style>
+</head>
+<body>
+  <h1>Heti Menü - Design Token Demo</h1>
+  <div style="margin-bottom: var(--space-lg); text-align: right;">
+    <button id="theme-toggle" style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--color-primary); color: #fff; border: none; font-size: var(--font-size-md); cursor: pointer; transition: var(--transition-fast);">Sötét mód</button>
+  </div>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn.addEventListener('click', () => {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      btn.textContent = isDark ? 'Sötét mód' : 'Világos mód';
+    });
+    // Alapértelmezett: világos
+    document.documentElement.setAttribute('data-theme', 'light');
+  </script>
+
+  <div class="token-group">
+    <h2>Színek</h2>
+    <div class="swatch-list">
+      <div class="swatch bg"><span>BG</span><span class="swatch-label">--color-bg</span></div>
+      <div class="swatch surface"><span>Surface</span><span class="swatch-label">--color-surface</span></div>
+      <div class="swatch primary"><span>Primary</span><span class="swatch-label">--color-primary</span></div>
+      <div class="swatch secondary"><span>Secondary</span><span class="swatch-label">--color-secondary</span></div>
+      <div class="swatch accent"><span>Accent</span><span class="swatch-label">--color-accent</span></div>
+      <div class="swatch error"><span>Error</span><span class="swatch-label">--color-error</span></div>
+      <div class="swatch success"><span>Success</span><span class="swatch-label">--color-success</span></div>
+      <div class="swatch text"><span>Text</span><span class="swatch-label">--color-text</span></div>
+      <div class="swatch muted"><span>Muted</span><span class="swatch-label">--color-muted</span></div>
+      <div class="swatch border"><span>Border</span><span class="swatch-label">--color-border</span></div>
+    </div>
+  </div>
+
+  <div class="token-group">
+    <h2>Tipográfia</h2>
+    <div class="font-demo font-base font-normal font-md">Alap betűcsalád, normál súly, közepes méret</div>
+    <div class="font-demo font-accent font-bold font-lg">Accent betűcsalád, vastag, nagy méret</div>
+    <div class="font-demo font-base font-xs">XS méret</div>
+    <div class="font-demo font-base font-sm">SM méret</div>
+    <div class="font-demo font-base font-md">MD méret</div>
+    <div class="font-demo font-base font-lg">LG méret</div>
+    <div class="font-demo font-base font-xl">XL méret</div>
+    <div class="font-demo font-base font-xxl">XXL méret</div>
+  </div>
+
+  <div class="token-group">
+    <h2>Térközök</h2>
+    <div class="space-demo">
+      <div class="space-box" style="margin-right: var(--space-xxs);">xxs</div>
+      <div class="space-box" style="margin-right: var(--space-xs);">xs</div>
+      <div class="space-box" style="margin-right: var(--space-sm);">sm</div>
+      <div class="space-box" style="margin-right: var(--space-md);">md</div>
+      <div class="space-box" style="margin-right: var(--space-lg);">lg</div>
+      <div class="space-box" style="margin-right: var(--space-xl);">xl</div>
+      <div class="space-box">xxl</div>
+    </div>
+  </div>
+
+  <div class="token-group">
+    <h2>Border Radius</h2>
+    <div class="swatch-list">
+      <div class="swatch radius-sm"><span>SM</span><span class="swatch-label">--radius-sm</span></div>
+      <div class="swatch radius-md"><span>MD</span><span class="swatch-label">--radius-md</span></div>
+      <div class="swatch radius-lg"><span>LG</span><span class="swatch-label">--radius-lg</span></div>
+      <div class="swatch radius-round"><span>Round</span><span class="swatch-label">--radius-round</span></div>
+    </div>
+  </div>
+
+  <div class="token-group">
+    <h2>Árnyékok</h2>
+    <div class="swatch-list">
+      <div class="swatch shadow-xs"><span>XS</span><span class="swatch-label">--shadow-xs</span></div>
+      <div class="swatch shadow-sm"><span>SM</span><span class="swatch-label">--shadow-sm</span></div>
+      <div class="swatch shadow-md"><span>MD</span><span class="swatch-label">--shadow-md</span></div>
+      <div class="swatch shadow-lg"><span>LG</span><span class="swatch-label">--shadow-lg</span></div>
+    </div>
+  </div>
+
+  <div class="token-group">
+    <h2>Breakpoints</h2>
+    <div class="breakpoint-demo">XS: <span style="color: var(--color-accent);">var(--breakpoint-xs)</span> | SM: <span style="color: var(--color-accent);">var(--breakpoint-sm)</span> | MD: <span style="color: var(--color-accent);">var(--breakpoint-md)</span> | LG: <span style="color: var(--color-accent);">var(--breakpoint-lg)</span> | XL: <span style="color: var(--color-accent);">var(--breakpoint-xl)</span></div>
+  </div>
+
+  <div class="token-group">
+    <h2>Transitions</h2>
+    <div class="transition-demo">
+      <div class="transition-box">Normal</div>
+      <div class="transition-box" style="transition: var(--transition-fast);">Fast</div>
+      <div class="transition-box" style="transition: var(--transition-slow);">Slow</div>
+    </div>
+    <div class="breakpoint-demo">Próbáld ki: vidd az egeret a dobozokra!</div>
+  </div>
+
+  <div class="token-group">
+    <h2>Z-index skála</h2>
+    <div class="zindex-demo">
+      <div class="zindex-box z-base">Base</div>
+      <div class="zindex-box z-dropdown">Dropdown</div>
+      <div class="zindex-box z-modal">Modal</div>
+      <div class="zindex-box z-toast">Toast</div>
+      <div class="zindex-box z-overlay">Overlay</div>
+    </div>
+  </div>
+
+</body>
+</html>

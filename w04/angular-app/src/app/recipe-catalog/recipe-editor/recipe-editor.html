@@ -1,0 +1,27 @@
+<form class="recipe-editor-form" (ngSubmit)="saveRecipe()">
+  <h2>Új recept hozzáadása</h2>
+  <label>
+    Név:
+    <input type="text" [(ngModel)]="recipe.title" name="title" required>
+  </label>
+  <label>
+    Leírás:
+    <textarea [(ngModel)]="recipe.desc" name="desc" required></textarea>
+  </label>
+  <label>
+    Kép URL:
+    <input type="text" [(ngModel)]="recipe.image" name="image">
+  </label>
+  <label>
+    Meta (pl. Elkészítési idő, Kalória, Nehézség):
+    <input type="text" [(ngModel)]="recipe.meta" name="meta">
+  </label>
+  <label>
+    Badge-ek (vesszővel elválasztva):
+    <input type="text" [(ngModel)]="badgesString" name="badges">
+  </label>
+  <div class="editor-actions">
+    <button type="submit" class="action-btn">Mentés</button>
+    <button type="button" class="action-btn" (click)="close.emit()">Mégsem</button>
+  </div>
+</form>

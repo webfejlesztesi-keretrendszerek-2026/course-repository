@@ -1,0 +1,16 @@
+<nav class="main-navbar">
+  <input #menuToggle type="checkbox" id="menu-toggle" class="menu-toggle" hidden>
+  <label for="menu-toggle" class="menu-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </label>
+  <div class="menu-links">
+    <a routerLink="/recipes" routerLinkActive="active" (click)="closeMenu()">Recept katalógus</a>
+    <a routerLink="/menu" routerLinkActive="active" (click)="closeMenu()">Heti menü</a>
+    <a routerLink="/shopping" routerLinkActive="active" (click)="closeMenu()">Bevásárlólista</a>
+    <a routerLink="/profile" routerLinkActive="active" (click)="closeMenu()">Profil</a>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
