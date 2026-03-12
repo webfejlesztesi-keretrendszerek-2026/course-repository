@@ -1,1 +1,24 @@
-<p>menu-calendar works!</p>
+<div class="calendar-grid" appSlotEqualHeight>
+	<div class="day-column" *ngFor="let day of days; let dayIdx = index">
+		<div class="day-header" [ngClass]="{'current': dayIdx === 0}">{{ day.label }}</div>
+		<ng-container *ngFor="let meal of ['Reggeli', 'Ebéd', 'Vacsora']; let mealIdx = index">
+			<ng-container *ngIf="menu[dayIdx] && menu[dayIdx][mealIdx] as recipe; else emptySlot">
+				<div class="meal-slot filled" #slot [style.height]="maxSlotHeight+'px'">
+					<app-mini-recipe-card [recipe]="recipe"
+						(edit)="editMeal.emit({day: dayIdx, meal: mealIdx})"
+						(delete)="deleteMeal.emit({day: dayIdx, meal: mealIdx})">
+					</app-mini-recipe-card>
+				</div>
+			</ng-container>
+			<ng-template #emptySlot>
+				<div class="meal-slot" (click)="editMeal.emit({day: dayIdx, meal: mealIdx})">
+					+ {{ meal }}
+				</div>
+			</ng-template>
+		</ng-container>
+		<div class="day-summary summary-ok">
+			Össz. kalória: {{ menu[dayIdx]?.reduce((sum, r) => sum + (r?.calories || 0), 0) }}
+			• Idő: <!-- Ide kerülhet főzési idő, ha lesz -->
+		</div>
+	</div>
+</div>

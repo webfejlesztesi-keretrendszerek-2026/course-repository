@@ -1,0 +1,80 @@
+/* A komponens mindig kitölti a szülő magasságát */
+:host {
+	height: 100%;
+	display: flex;
+}
+
+// Reszponzív mini-recipe-card
+.mini-recipe {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: var(--space-sm);
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+	box-sizing: border-box;
+	min-height: 0;
+	height: 100%;
+	max-height: 100%;
+	flex: 1 1 auto;
+	background: var(--color-surface);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-xs);
+}
+
+.mini-recipe-img {
+	width: 64px;
+	height: 64px;
+	border-radius: var(--radius-sm);
+	object-fit: cover;
+	background: var(--color-muted);
+	flex-shrink: 0;
+	align-self: center;
+}
+.mini-recipe-info {
+	flex: 1 1 0%;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.mini-recipe-title {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-primary);
+	white-space: normal;
+	word-break: break-word;
+	overflow-wrap: break-word;
+	margin-bottom: var(--space-xxs);
+	box-sizing: border-box;
+}
+.mini-recipe-meta {
+	font-size: var(--font-size-xs);
+	color: var(--color-muted);
+	white-space: normal;
+	word-break: break-word;
+	overflow-wrap: break-word;
+	box-sizing: border-box;
+}
+.slot-actions {
+	display: flex;
+	gap: var(--space-xs);
+	justify-content: center;
+	margin-top: var(--space-xs);
+}
+.slot-btn {
+	background: var(--color-secondary);
+	color: var(--color-text);
+	border: none;
+	border-radius: var(--radius-sm);
+	font-size: 0.85em;
+	padding: var(--space-xxs) var(--space-xs);
+	cursor: pointer;
+	transition: var(--transition-fast);
+}
+.slot-btn:hover {
+	background: var(--color-accent);
+	color: #fff;
+}

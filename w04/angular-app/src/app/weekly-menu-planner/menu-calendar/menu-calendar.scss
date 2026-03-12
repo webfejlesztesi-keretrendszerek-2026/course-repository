@@ -1,0 +1,92 @@
+
+.calendar-grid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: var(--space-md);
+	margin-bottom: var(--space-lg);
+}
+.day-column {
+	background: var(--color-bg);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-xs);
+	padding: var(--space-sm);
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	min-width: 0;
+	max-width: 100%;
+	overflow-x: auto;
+}
+.day-header {
+	font-family: var(--font-family-accent);
+	font-size: var(--font-size-md);
+	font-weight: var(--font-weight-bold);
+	margin-bottom: var(--space-xs);
+	text-align: center;
+}
+.day-header.current {
+	border-bottom: 2px solid var(--color-primary);
+	color: var(--color-primary);
+}
+.meal-slot {
+	background: var(--color-surface);
+	border: 2px dashed var(--color-border);
+	border-radius: var(--radius-md);
+	margin-bottom: var(--space-sm);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: var(--font-size-sm);
+	color: var(--color-muted);
+	cursor: pointer;
+	transition: var(--transition-fast);
+	position: relative;
+	padding: var(--space-sm);
+	min-height: 200px;
+	height: auto;
+	box-sizing: border-box;
+	word-break: break-word;
+	overflow-wrap: break-word;
+}
+.meal-slot.filled {
+	border: 1px solid var(--color-border);
+	background: var(--color-bg);
+	color: var(--color-text);
+	flex-direction: column;
+	align-items: flex-start;
+	padding: var(--space-xs);
+	width: 100%;
+	box-sizing: border-box;
+	min-height: 200px;
+	height: auto;
+	word-break: break-word;
+	overflow-wrap: break-word;
+}
+.slot-actions {
+	display: flex;
+	gap: var(--space-xs);
+	margin-top: var(--space-xs);
+}
+.slot-btn {
+	background: var(--color-secondary);
+	color: var(--color-text);
+	border: none;
+	border-radius: var(--radius-sm);
+	font-size: var(--font-size-xs);
+	padding: var(--space-xxs) var(--space-xs);
+	cursor: pointer;
+	transition: var(--transition-fast);
+}
+.slot-btn:hover {
+	background: var(--color-accent);
+	color: #fff;
+}
+.day-summary {
+	font-size: var(--font-size-xs);
+	color: var(--color-muted);
+	text-align: center;
+	margin-top: var(--space-xs);
+}
+.summary-ok { color: var(--color-success); }
+.summary-warn { color: var(--color-secondary); }
+.summary-err { color: var(--color-error); }

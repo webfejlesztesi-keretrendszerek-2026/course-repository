@@ -1,1 +1,59 @@
-<p>weekly-menu-planner works!</p>
+<div class="weekly-menu-planner">
+	<header>
+		<nav class="week-switcher" aria-label="Hét váltása">
+			<button class="week-btn" (click)="prevWeek()">← Előző hét</button>
+			<button class="week-btn active" (click)="openDatePicker()">{{ weekLabel }}</button>
+			<button class="week-btn" (click)="nextWeek()">Következő hét →</button>
+
+			<!-- Modal dialog for date picker -->
+			<ng-template #datePickerDialog>
+				<h2 mat-dialog-title>Válassz egy napot</h2>
+				<mat-dialog-content>
+					<mat-calendar (selectedChange)="handleCalendarSelect($event)"></mat-calendar>
+				</mat-dialog-content>
+				<mat-dialog-actions>
+					<button class="week-btn" (click)="currentDialogRef?.close()">Mégse</button>
+				</mat-dialog-actions>
+			</ng-template>
+		</nav>
+		<div class="menu-actions">
+			<button class="action-btn" (click)="copyWeek()">Hét másolása</button>
+			<button class="action-btn" (click)="deleteWeek()">Hét törlése</button>
+		</div>
+		<div class="save-status ok">✓ Mentve • Utoljára mentve: {{ lastSaved | date:'shortTime' }}</div>
+	</header>
+
+	<section class="week-summary" aria-label="Heti összesítő">
+		<div>Átlag kalória/nap: <span class="summary-ok">{{ avgCalories }}</span></div>
+		<div>Összes főzési idő: <span>{{ totalCookingTime }}</span></div>
+	</section>
+
+	<!-- Desktop/Tablet grid nézet -->
+	<section class="calendar-grid" aria-label="Heti naptár">
+		<app-menu-calendar
+			[days]="days"
+			[menu]="menu"
+			(editMeal)="onEditMeal($event)"
+			(deleteMeal)="onDeleteMeal($event)">
+		</app-menu-calendar>
+	</section>
+
+	<!-- Mobil accordion nézet -->
+	<section class="mobile-days" aria-label="Heti naptár (mobil)">
+		<div class="accordion-day" *ngFor="let day of days; let i = index">
+			<div class="accordion-header">{{ day.label }} <span>Össz. kalória: {{ getDayCalories(i) }}</span></div>
+			<div class="accordion-content">
+				<div class="meal-slot" *ngFor="let meal of meals; let j = index">
+					<ng-container *ngIf="menu[i][j]; else emptySlot">
+						<div class="meal-slot filled" *ngIf="menu[i][j] as recipe">
+							<app-mini-recipe-card [recipe]="recipe" (edit)="onEditMeal({day: i, meal: j})" (delete)="onDeleteMeal({day: i, meal: j})"></app-mini-recipe-card>
+						</div>
+					</ng-container>
+					<ng-template #emptySlot>
+						+ {{ meal }}
+					</ng-template>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
