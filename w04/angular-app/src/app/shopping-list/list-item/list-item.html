@@ -1,1 +1,6 @@
-<p>list-item works!</p>
+<div class="shopping-item" [class.checked]="item?.checked">
+	<input id="chk-{{sectionId}}-{{index}}" class="item-checkbox" type="checkbox" [checked]="item?.checked" (change)="onToggle()" [attr.aria-label]="item?.name + ' kipipálása'">
+	<label for="chk-{{sectionId}}-{{index}}" class="item-name">{{ item?.name }}</label>
+	<span class="item-amount" tabindex="0" aria-label="Mennyiség szerkesztése">{{ item?.amount }}</span>
+	<button class="item-delete" (click)="onRemove()" aria-label="Tétel törlése">🗑️</button>
+</div>

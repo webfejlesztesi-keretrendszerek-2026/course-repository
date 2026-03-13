@@ -76,25 +76,9 @@ export { WeeklyMenuPlannerComponent as WeeklyMenuPlanner };
   styleUrl: './weekly-menu-planner.scss',
 })
 export class WeeklyMenuPlannerComponent implements OnInit {
-    showWeekPicker = false;
-    weekOptions = [
-      { label: '2026. március 9. – 15.', date: new Date('2026-03-09') },
-      { label: '2026. március 2. – 8.', date: new Date('2026-03-02') },
-      { label: '2026. február 23. – 29.', date: new Date('2026-02-23') },
-      { label: '2026. február 16. – 22.', date: new Date('2026-02-16') },
-    ];
-    datepickerOpened = false;
+    // kept minimal: remove unused week-picker related fields
   selectedDate: Date = new Date();
-  get selectedDateString(): string {
-    return this.selectedDate.toISOString().slice(0, 10);
-  }
-
-  onDateChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const date = new Date(input.value);
-    this.selectedDate = date;
-    this.updateWeekLabel(date);
-  }
+  
 
   // Helper to format week label deterministically
   private formatWeekLabel(date: Date): string {
@@ -229,9 +213,7 @@ export class WeeklyMenuPlannerComponent implements OnInit {
     });
   }
 
-  private removeCalendarTooltips(): void {
-    // removed: handled by MatDatepickerIntl provider now
-  }
+  // tooltips handled by MatDatepickerIntl provider
 
   @ViewChild('datePickerDialog') datePickerDialog!: TemplateRef<any>;
 
@@ -251,15 +233,7 @@ export class WeeklyMenuPlannerComponent implements OnInit {
     this.updateWeekLabel(date);
   }
 
-  onWeekLabelClick(): void {
-    this.datepickerOpened = true;
-  }
-
-  onDatepickerChange(event: any): void {
-    // kept for compatibility if called directly; route to applySelectedDate
-    const date = this.extractDateFromEvent(event);
-    if (date) this.applySelectedDate(date);
-  }
+  
 
   // Called from the calendar's selectedChange to close the dialog with the selected date
   handleCalendarSelect(event: any): void {
