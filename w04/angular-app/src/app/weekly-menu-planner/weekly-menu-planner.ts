@@ -9,7 +9,7 @@ import { MenuCalendar } from './menu-calendar/menu-calendar';
 import { MiniRecipeCard } from './mini-recipe-card/mini-recipe-card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
-import { MAT_DATEPICKER_SCROLL_STRATEGY } from '@angular/material/datepicker';
+import { MAT_DATEPICKER_SCROLL_STRATEGY, MatDatepickerIntl } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, DateAdapter, NativeDateAdapter } from '@angular/material/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -52,6 +52,23 @@ export { WeeklyMenuPlannerComponent as WeeklyMenuPlanner };
         override getFirstDayOfWeek(): number {
           return 1; // Monday
         }
+      }
+    }
+    ,
+    {
+      provide: MatDatepickerIntl,
+      useFactory: () => {
+        const intl = new MatDatepickerIntl();
+        // empty = no tooltip, or set to Hungarian labels if preferred
+        intl.prevMonthLabel = '';
+        intl.nextMonthLabel = '';
+        intl.prevYearLabel = '';
+        intl.nextYearLabel = '';
+        intl.prevMultiYearLabel = '';
+        intl.nextMultiYearLabel = '';
+        intl.switchToMonthViewLabel = '';
+        intl.switchToMultiYearViewLabel = '';
+        return intl;
       }
     }
   ],
@@ -196,8 +213,11 @@ export class WeeklyMenuPlannerComponent implements OnInit {
     const dialogRef = this.dialog.open(this.datePickerDialog);
     this.currentDialogRef = dialogRef;
 
+    // no-op: using MatDatepickerIntl provider to control nav labels/tooltips
+
     dialogRef.afterClosed().subscribe(result => {
       this.currentDialogRef = undefined;
+      // no MutationObserver to disconnect (labels handled by MatDatepickerIntl)
       if (result) {
         // if dialog closed with a date passed, defer applying the date to the next tick
         // to avoid changing bindings during the current change-detection cycle.
@@ -207,6 +227,10 @@ export class WeeklyMenuPlannerComponent implements OnInit {
         }
       }
     });
+  }
+
+  private removeCalendarTooltips(): void {
+    // removed: handled by MatDatepickerIntl provider now
   }
 
   @ViewChild('datePickerDialog') datePickerDialog!: TemplateRef<any>;
