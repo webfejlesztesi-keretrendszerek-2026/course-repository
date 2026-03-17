@@ -1,0 +1,10 @@
+<header class="section-header" tabindex="0" aria-expanded="true">
+	<h2>{{ section.title }}</h2>
+	<span class="section-progress">{{ section.items.filter(i => i.checked).length }}/{{ section.items.length }} ✓</span>
+</header>
+<ul class="section-items" role="list">
+	<li *ngFor="let item of section.items; let i = index">
+		<app-list-item [item]="item" [index]="i" [sectionId]="section.id" (toggle)="onToggle($event)" (remove)="onRemove($event)"></app-list-item>
+	</li>
+</ul>
+<app-list-editor (add)="onAdd($event)"></app-list-editor>

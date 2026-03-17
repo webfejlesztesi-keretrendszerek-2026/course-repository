@@ -1,0 +1,5 @@
+<div class="add-item-row">
+	<input class="add-item-input" name="itemName" [(ngModel)]="name" type="text" placeholder="Új tétel neve" aria-label="Új tétel neve">
+	<input class="add-item-amount" name="itemAmount" [(ngModel)]="amount" type="text" placeholder="Mennyiség" aria-label="Mennyiség">
+	<button class="add-item-btn" (click)="emitAdd()">Hozzáad</button>
+</div>

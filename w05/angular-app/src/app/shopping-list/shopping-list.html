@@ -1,0 +1,25 @@
+<main id="main-content">
+	<header>
+		<h1>Bevásárlólista</h1>
+		<nav class="list-actions" aria-label="Lista műveletek">
+			<button class="action-btn" (click)="generateList()">Lista generálása</button>
+			<button class="action-btn" (click)="clearList()">Lista törlése</button>
+		</nav>
+	</header>
+
+	<div class="progress-label">{{ getTotals().done }} / {{ getTotals().total }} tétel kész</div>
+	<div class="progress-bar" aria-label="Haladás">
+		<div class="progress-bar-inner" [style.width.%]="(getTotals().total ? (getTotals().done / getTotals().total) * 100 : 0)"></div>
+	</div>
+
+	  <section *ngFor="let section of sections" class="shopping-section">
+		<app-list-section [section]="section" (itemToggled)="onItemToggled($event)" (itemDeleted)="onItemDeleted($event)" (itemAdded)="onItemAdded($event)"></app-list-section>
+	  </section>
+
+	<div class="list-footer">
+		<button class="footer-btn" (click)="copyText()">Másolás</button>
+		<button class="footer-btn">Megosztás</button>
+		<button class="footer-btn" (click)="print()">Nyomtatás</button>
+		<button class="footer-btn" (click)="resetAll()">Nullázás</button>
+	</div>
+</main>

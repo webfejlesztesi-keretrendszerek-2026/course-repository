@@ -1,0 +1,66 @@
+:host {
+	display: block;
+	padding: var(--space-lg);
+	color: var(--color-text);
+}
+
+main {
+	max-width: 480px;
+	margin: 0 auto;
+	background: var(--color-surface);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-md);
+	padding: var(--space-lg);
+}
+
+h1 {
+	font-family: var(--font-family-accent);
+	font-size: var(--font-size-xl);
+	margin-bottom: var(--space-lg);
+}
+
+.profile-form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-md);
+}
+
+.form-group { display: flex; flex-direction: column; gap: var(--space-xs); }
+
+label { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], select, input[type="range"] {
+	border-radius: var(--radius-md);
+	border: 1px solid var(--color-border);
+	padding: var(--space-sm);
+	font-size: var(--font-size-md);
+	background: var(--color-bg);
+	color: var(--color-text);
+}
+
+.profile-avatar { width: 80px; height: 80px; border-radius: var(--radius-round); object-fit: cover; background: var(--color-muted); margin-bottom: var(--space-md); }
+
+.diet-checkboxes { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+
+.range-group { display: flex; align-items: center; gap: var(--space-sm); }
+
+.profile-save {
+	padding: var(--space-sm) var(--space-lg);
+	border-radius: var(--radius-lg);
+	background: var(--color-primary);
+	color: #fff;
+	border: none;
+	font-size: var(--font-size-lg);
+	cursor: pointer;
+}
+
+.toast { background: var(--color-success); color: #fff; border-radius: var(--radius-md); padding: var(--space-sm) var(--space-md); font-size: var(--font-size-md); margin-top: var(--space-md); text-align: center; }
+
+.settings-section { margin-top: var(--space-lg); }
+.settings-row { display: flex; align-items: center; gap: var(--space-md); }
+.settings-label { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); min-width: 120px; }
+.account-actions { display: flex; gap: var(--space-md); margin-top: var(--space-lg); justify-content: flex-end; }
+.account-btn { background: var(--color-secondary); color: var(--color-text); border: none; border-radius: var(--radius-md); font-size: var(--font-size-md); padding: var(--space-sm) var(--space-md); cursor: pointer; }
+.account-btn.danger { background: var(--color-error); color: #fff; }
+
+.theme-toggle { padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: var(--color-primary); color: #fff; border: none; cursor: pointer; }
