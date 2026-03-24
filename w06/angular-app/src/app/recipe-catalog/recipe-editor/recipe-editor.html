@@ -1,0 +1,43 @@
+<form class="recipe-editor-form" [formGroup]="form" (ngSubmit)="saveRecipe()">
+  <h2>Új recept hozzáadása</h2>
+  <label>
+    Név:
+    <input type="text" formControlName="title">
+  </label>
+  <div class="field-error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">Név megadása kötelező.</div>
+
+  <label>
+    Leírás:
+    <textarea formControlName="desc"></textarea>
+  </label>
+  <div class="field-error" *ngIf="form.get('desc')?.touched && form.get('desc')?.invalid">Leírás megadása kötelező.</div>
+
+  <label>
+    Kép URL:
+    <input type="text" formControlName="image">
+  </label>
+
+  <label>
+    Meta (pl. Elkészítési idő, Kalória, Nehézség):
+    <input type="text" formControlName="meta">
+  </label>
+
+  <label>
+    Kategóriák:
+    <div class="category-dropdown">
+      <button type="button" class="dropdown-toggle" (click)="toggleDropdown()">
+        Kategóriák ({{ form.get('badges')?.value?.length || 0 }})
+      </button>
+      <div class="dropdown-menu" *ngIf="dropdownOpen">
+        <label *ngFor="let c of categories" class="category-item">
+          <input type="checkbox" [checked]="isBadgeSelected(c)" (change)="toggleBadge(c)"> {{ c }}
+        </label>
+      </div>
+    </div>
+  </label>
+
+  <div class="editor-actions">
+    <button type="submit" class="action-btn" [disabled]="form.invalid">Mentés</button>
+    <button type="button" class="action-btn" (click)="close.emit()">Mégsem</button>
+  </div>
+</form>

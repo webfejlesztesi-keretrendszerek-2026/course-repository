@@ -1,0 +1,134 @@
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-lg);
+  z-index: 1001;
+  min-width: 320px;
+  max-width: 90vw;
+}
+.dialog-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--color-error);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-round);
+  font-size: 2rem;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  box-shadow: var(--shadow-xs);
+}
+
+.recipe-editor-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  min-width: 320px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-lg);
+  align-items: center;
+}
+.recipe-editor-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-md);
+  color: var(--color-primary);
+  width: 100%;
+}
+.recipe-editor-form input,
+.recipe-editor-form textarea {
+  margin-top: var(--space-xs);
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-md);
+  background: var(--color-bg);
+  color: var(--color-text);
+  width: 100%;
+  box-sizing: border-box;
+}
+.category-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.category-dropdown .dropdown-toggle {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  box-shadow: var(--shadow-xs);
+}
+.category-dropdown .dropdown-menu {
+  left: 0;
+  top: calc(100% + var(--space-xs));
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  box-shadow: var(--shadow-md);
+  z-index: 2000;
+  min-width: 220px;
+  max-height: 220px;
+  overflow: auto;
+}
+.category-item {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: calc(var(--space-xxs)) 0;
+  font-size: var(--font-size-md);
+  color: var(--color-primary);
+}
+.category-item input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* make dropdown full width on very small screens */
+@media (max-width: var(--breakpoint-sm)) {
+  .category-dropdown .dropdown-menu {
+    left: 0;
+    right: 0;
+    min-width: auto;
+  }
+}
+.editor-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: flex-end;
+}
+.action-btn {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.action-btn:hover {
+  background: var(--color-accent);
+}

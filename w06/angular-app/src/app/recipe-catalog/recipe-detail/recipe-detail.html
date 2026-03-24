@@ -1,0 +1,9 @@
+<div class="recipe-detail">
+  <img class="recipe-detail-image" [src]="recipe.image" [alt]="recipe.title + ' - étel fotó'">
+  <h2>{{ recipe.title }}</h2>
+  <div class="recipe-detail-meta">{{ recipe.meta }}</div>
+  <div class="recipe-detail-desc">{{ recipe.desc }}</div>
+  <div class="recipe-detail-badges">
+    <span class="badge" *ngFor="let badge of recipe.badges">{{ badge }}</span>
+  </div>
+</div>

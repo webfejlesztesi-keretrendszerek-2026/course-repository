@@ -1,0 +1,11 @@
+<div class="mini-recipe" tabindex="0" role="group" aria-label="Recept kártya">
+	<img class="mini-recipe-img" [src]="recipe.image" [alt]="recipe.title + ' - étel fotó'" loading="lazy">
+	<div class="mini-recipe-info">
+		<div class="mini-recipe-title">{{ recipe.title }}</div>
+		<div class="mini-recipe-meta">{{ recipe.time }} • {{ recipe.calories }} kcal</div>
+	</div>
+	<div class="slot-actions">
+		<button class="slot-btn" (click)="edit.emit()">Csere</button>
+		<button class="slot-btn" (click)="delete.emit()">Törlés</button>
+	</div>
+</div>
