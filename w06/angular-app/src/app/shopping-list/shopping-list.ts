@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListSection } from './list-section/list-section';
+import { Section, ShoppingItem } from '../models/shopping';
+import { ShoppingService } from '../services/shopping.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -10,82 +12,59 @@ import { ListSection } from './list-section/list-section';
   styleUrl: './shopping-list.scss',
 })
 export class ShoppingList {
-  sections: any[] = [
-    {
-      id: 'veg',
-      title: '🥬 Zöldség & Gyümölcs',
-      items: [
-        { name: 'Paradicsom', amount: '4 db', checked: false },
-        { name: 'Uborka', amount: '2 db', checked: true },
-        { name: 'Paprika', amount: '3 db', checked: false },
-      ],
-    },
-    {
-      id: 'meat',
-      title: '🥩 Hús & Hal',
-      items: [
-        { name: 'Csirkemell', amount: '500 g', checked: false },
-        { name: 'Lazac', amount: '2 szelet', checked: true },
-      ],
-    },
-  ];
+  constructor(private shoppingService: ShoppingService) {}
 
+  // expose service signals/values to the template
+  get sections() {
+    return this.shoppingService.sections;
+  }
+  get totalItems() {
+    return this.shoppingService.totalItems;
+  }
+  get checkedItems() {
+    return this.shoppingService.checkedItems;
+  }
+  get progressPercent() {
+    return this.shoppingService.progressPercent;
+  }
+  get sectionsProgress() {
+    return this.shoppingService.sectionsProgress;
+  }
+
+  // delegate actions to the service
   generateList(): void {
-    alert('Lista generálása (demo) — implementáld a generálást a heti menü alapján');
+    this.shoppingService.generateList();
   }
 
   clearList(): void {
-    this.sections.forEach(s => (s.items = []));
+    this.shoppingService.clearList();
   }
 
-  // Handlers for events coming from child components
   onItemToggled(payload: { sectionId: string; index: number }) {
-    const s = this.sections.find(x => x.id === payload.sectionId);
-    if (!s) return;
-    const it = s.items[payload.index];
-    if (it) it.checked = !it.checked;
+    this.shoppingService.onItemToggled(payload);
   }
 
   onItemDeleted(payload: { sectionId: string; index: number }) {
-    const s = this.sections.find(x => x.id === payload.sectionId);
-    if (!s) return;
-    s.items.splice(payload.index, 1);
+    this.shoppingService.onItemDeleted(payload);
   }
 
-  onItemAdded(payload: { sectionId: string; name: string; amount: string }) {
-    const s = this.sections.find(x => x.id === payload.sectionId);
-    if (!s) return;
-    s.items.push({ name: payload.name, amount: payload.amount || '', checked: false });
+  onItemAdded(payload: { sectionId: string; name: string; amount: number; unit?: string }) {
+    this.shoppingService.onItemAdded(payload);
   }
 
   copyText(): void {
-    const text = this.toPlainText();
-    if (navigator.clipboard) navigator.clipboard.writeText(text);
+    this.shoppingService.copyText();
   }
 
   toPlainText(): string {
-    return this.sections
-      .map(s => `${s.title}\n${s.items.map((i: any) => `- ${i.name} ${i.amount}`).join('\n')}`)
-      .join('\n\n');
+    return this.shoppingService.toPlainText();
   }
 
   print(): void {
-    window.print();
+    this.shoppingService.print();
   }
 
   resetAll(): void {
-    this.sections = [];
-  }
-
-  sectionProgress(section: any) {
-    const total = section.items.length;
-    const done = section.items.filter((i: any) => i.checked).length;
-    return { done, total, percent: total ? Math.round((done / total) * 100) : 0 };
-  }
-
-  getTotals() {
-    const done = this.sections.reduce((acc, s) => acc + s.items.filter((i: any) => i.checked).length, 0);
-    const total = this.sections.reduce((acc, s) => acc + s.items.length, 0);
-    return { done, total };
+    this.shoppingService.resetAll();
   }
 }

@@ -1,6 +1,6 @@
 <header class="section-header" tabindex="0" aria-expanded="true">
 	<h2>{{ section.title }}</h2>
-	<span class="section-progress">{{ section.items.filter(i => i.checked).length }}/{{ section.items.length }} ✓</span>
+	<span class="section-progress">{{ progress?.done ?? section.items.filter(i => i.checked).length }}/{{ progress?.total ?? section.items.length }} ✓</span>
 </header>
 <ul class="section-items" role="list">
 	<li *ngFor="let item of section.items; let i = index">

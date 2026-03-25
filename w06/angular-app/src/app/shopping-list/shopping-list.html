@@ -7,13 +7,13 @@
 		</nav>
 	</header>
 
-	<div class="progress-label">{{ getTotals().done }} / {{ getTotals().total }} tétel kész</div>
+	<div class="progress-label">{{ checkedItems() }} / {{ totalItems() }} tétel kész</div>
 	<div class="progress-bar" aria-label="Haladás">
-		<div class="progress-bar-inner" [style.width.%]="(getTotals().total ? (getTotals().done / getTotals().total) * 100 : 0)"></div>
+		<div class="progress-bar-inner" [style.width.%]="progressPercent()"></div>
 	</div>
 
-	  <section *ngFor="let section of sections" class="shopping-section">
-		<app-list-section [section]="section" (itemToggled)="onItemToggled($event)" (itemDeleted)="onItemDeleted($event)" (itemAdded)="onItemAdded($event)"></app-list-section>
+	  <section *ngFor="let section of sections()" class="shopping-section">
+		<app-list-section [section]="section" [progress]="sectionsProgress()[section.id]" (itemToggled)="onItemToggled($event)" (itemDeleted)="onItemDeleted($event)" (itemAdded)="onItemAdded($event)"></app-list-section>
 	  </section>
 
 	<div class="list-footer">

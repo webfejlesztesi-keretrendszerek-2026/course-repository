@@ -66,7 +66,8 @@
   align-items: center;
   justify-content: center;
   margin-right: 8px;
-  color: var(--color-primary);
+  /* inherit the link color so icons follow hover/active text color */
+  color: inherit;
 }
 .menu-links a .label { display: inline-block; }
 .menu-links a.active,
@@ -129,7 +130,7 @@
   width: 25%;
   height: 100%;
 }
-.bottom-tabbar a .icon { margin-bottom: 4px; }
+.bottom-tabbar a .icon { margin-bottom: 4px; color: inherit; }
 .bottom-tabbar a.active, .bottom-tabbar a:active { background: transparent; color: var(--color-accent); }
 
 /* Show tabbar on very small screens, keep hamburger for small tablets */

@@ -9,45 +9,45 @@
 	</header>
 
 	<section class="profile-section">
-		<form class="profile-form" (ngSubmit)="saveProfile()" aria-label="Profil szerkesztő">
+		<form class="profile-form" [formGroup]="form" (ngSubmit)="saveProfile()" aria-label="Profil szerkesztő">
 			<img class="profile-avatar" src="https://via.placeholder.com/80x80?text=Avatar" alt="Profilkép, Minta Felhasználó">
 
 			<div class="form-group">
 				<label for="name">Név</label>
-				<input id="name" name="name" type="text" [(ngModel)]="user.name" aria-label="Név">
+				<input id="name" type="text" formControlName="name" aria-label="Név">
 			</div>
 
 			<div class="form-group">
 				<label for="email">Email</label>
-				<input id="email" name="email" type="email" [(ngModel)]="user.email" aria-label="Email">
+				<input id="email" type="email" formControlName="email" aria-label="Email">
 			</div>
 
 			<div class="form-group">
 				<label for="password">Jelszó</label>
-				<input id="password" name="password" type="password" [(ngModel)]="user.password" placeholder="Új jelszó" aria-label="Jelszó">
+				<input id="password" type="password" formControlName="password" placeholder="Új jelszó" aria-label="Jelszó">
 			</div>
 
 			<div class="form-group">
 				<label>Diéta</label>
 				<div class="diet-checkboxes">
-					<label><input type="checkbox" name="vegetarian" [(ngModel)]="diets.vegetarian" aria-label="Vegetáriánus"> Vegetáriánus</label>
-					<label><input type="checkbox" name="vegan" [(ngModel)]="diets.vegan" aria-label="Vegán"> Vegán</label>
-					<label><input type="checkbox" name="glutenFree" [(ngModel)]="diets.glutenFree" aria-label="Gluténmentes"> Gluténmentes</label>
-					<label><input type="checkbox" name="lactoseFree" [(ngModel)]="diets.lactoseFree" aria-label="Laktózmentes"> Laktózmentes</label>
+					<label><input type="checkbox" formControlName="vegetarian" aria-label="Vegetáriánus"> Vegetáriánus</label>
+					<label><input type="checkbox" formControlName="vegan" aria-label="Vegán"> Vegán</label>
+					<label><input type="checkbox" formControlName="glutenFree" aria-label="Gluténmentes"> Gluténmentes</label>
+					<label><input type="checkbox" formControlName="lactoseFree" aria-label="Laktózmentes"> Laktózmentes</label>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="calorie">Napi kalória cél</label>
 				<div class="range-group">
-					<input id="calorie" name="calorie" type="number" min="1200" max="3500" [(ngModel)]="calorie" aria-label="Napi kalória cél">
-					  <input name="calorieRange" type="range" min="1200" max="3500" [(ngModel)]="calorie" aria-label="Napi kalória cél">
+					<input id="calorie" type="number" min="1200" max="3500" formControlName="calorie" aria-label="Napi kalória cél">
+					  <input name="calorieRange" type="range" min="1200" max="3500" formControlName="calorie" aria-label="Napi kalória cél">
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="household">Háztartás mérete</label>
-				<input id="household" name="household" type="number" min="1" max="8" [(ngModel)]="household" aria-label="Háztartás mérete">
+				<input id="household" type="number" min="1" max="8" formControlName="household" aria-label="Háztartás mérete">
 			</div>
 
 			<button class="profile-save" type="submit" aria-label="Profil mentése">Mentés</button>
@@ -60,7 +60,7 @@
 		<div class="settings-group">
 			<div class="settings-row">
 				<span class="settings-label">Megjelenés</span>
-				<select class="settings-select" name="theme" [(ngModel)]="theme" aria-label="Megjelenés választása">
+				<select class="settings-select" formControlName="theme" aria-label="Megjelenés választása">
 					<option value="light">Világos</option>
 					<option value="dark">Sötét</option>
 					<option value="system">Rendszer</option>
@@ -69,7 +69,7 @@
 
 			<div class="settings-row">
 				<span class="settings-label">Mértékegység</span>
-				<select class="settings-select" name="units" [(ngModel)]="units" aria-label="Mértékegység választása">
+				<select class="settings-select" formControlName="units" aria-label="Mértékegység választása">
 					<option value="metric">Metrikus</option>
 					<option value="imperial">Angolszász</option>
 				</select>

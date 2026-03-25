@@ -1,5 +1,31 @@
-<div class="add-item-row">
-	<input class="add-item-input" name="itemName" [(ngModel)]="name" type="text" placeholder="Új tétel neve" aria-label="Új tétel neve">
-	<input class="add-item-amount" name="itemAmount" [(ngModel)]="amount" type="text" placeholder="Mennyiség" aria-label="Mennyiség">
-	<button class="add-item-btn" (click)="emitAdd()">Hozzáad</button>
-</div>
+<form [formGroup]="form" class="add-item-row" (ngSubmit)="emitAdd()">
+	<div class="field">
+		<input class="add-item-input" formControlName="name" type="text" placeholder="Új tétel neve" aria-label="Új tétel neve">
+		<div class="field-error">
+			<small *ngIf="(form.get('name')?.touched || form.touched) && form.get('name')?.hasError('required')">Név megadása kötelező.</small>
+		</div>
+	</div>
+
+	<div class="field">
+		<input class="add-item-amount" formControlName="amount" type="number" step="any" placeholder="Mennyiség" aria-label="Mennyiség">
+		<div class="field-error">
+			<small *ngIf="(form.get('amount')?.touched || form.touched) && form.get('amount')?.hasError('required')">Mennyiség megadása kötelező.</small>
+			<small *ngIf="(form.get('amount')?.touched || form.touched) && form.get('amount')?.hasError('notNumber')">Csak számot adhat meg.</small>
+			<small *ngIf="(form.get('amount')?.touched || form.touched) && form.get('amount')?.hasError('nonPositive')">A mennyiségnek nagyobbnak kell lennie 0-nál.</small>
+		</div>
+	</div>
+
+	<div class="field field--unit">
+		<select class="add-item-unit" formControlName="unit" aria-label="Mértékegység">
+			<option value="">--</option>
+			<option *ngFor="let u of units" [value]="u">{{ u }}</option>
+		</select>
+		<div class="field-error">
+			<small *ngIf="(form.get('unit')?.touched || form.touched) && form.get('unit')?.hasError('required')">Mértékegység kiválasztása kötelező.</small>
+		</div>
+	</div>
+
+	<div class="field field--actions">
+		<button class="add-item-btn" type="submit" [disabled]="form.invalid">Hozzáad</button>
+	</div>
+</form>

@@ -12,9 +12,10 @@ import { ListEditor } from '../list-editor/list-editor';
 })
 export class ListSection {
   @Input() section: any;
+  @Input() progress?: { done: number; total: number; percent: number };
   @Output() itemToggled = new EventEmitter<{ sectionId: string; index: number }>();
   @Output() itemDeleted = new EventEmitter<{ sectionId: string; index: number }>();
-  @Output() itemAdded = new EventEmitter<{ sectionId: string; name: string; amount: string }>();
+  @Output() itemAdded = new EventEmitter<{ sectionId: string; name: string; amount: number; unit?: string }>();
 
   onToggle(index: number) {
     this.itemToggled.emit({ sectionId: this.section.id, index });
@@ -24,7 +25,7 @@ export class ListSection {
     this.itemDeleted.emit({ sectionId: this.section.id, index });
   }
 
-  onAdd(payload: { name: string; amount: string }) {
-    this.itemAdded.emit({ sectionId: this.section.id, name: payload.name, amount: payload.amount });
+  onAdd(payload: { name: string; amount: number; unit?: string }) {
+    this.itemAdded.emit({ sectionId: this.section.id, name: payload.name, amount: payload.amount, unit: payload.unit });
   }
 }
