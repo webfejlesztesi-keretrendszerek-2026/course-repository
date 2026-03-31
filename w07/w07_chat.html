@@ -1,0 +1,781 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>GitHub Copilot Chat Vizualizáció</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
+        .chat-container { max-width: 900px; margin: auto; display: flex; flex-direction: column; }
+        .message { margin: 10px 0; padding: 15px; border-radius: 15px; max-width: 85%; line-height: 1.5; }
+        .user { background-color: #007bff; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .ai { background-color: white; color: #1c1e21; align-self: flex-start; border-bottom-left-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .label { font-weight: bold; font-size: 0.8em; margin-bottom: 5px; display: block; }
+        pre { background-color: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; color: #333; }
+        code { font-family: 'Consolas', monospace; }
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>GitHub Copilot Chat Napló</h1>
+
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">Egy Angular étkezéstervező alkalmazást építek ("Heti Menü"). A csatolt fájlokban látod
+a jelenlegi TypeScript adatmodelleket és a funkcionális tervben definiált Firestore
+adatmodellt.
+
+A jelenlegi modellekkel ezek a problémák:
+1. A Recipe.meta egyetlen string — nem kereshető, nem szűrhető
+2. Nincs ingredients és steps tömb a Recipe-ben
+3. Nincs Ingredient entitás
+4. A kategóriák hardcoded enum, nem adatbázis-entitások
+5. A heti menünek nincs saját modellje (egy 2D tömb a komponensben)
+6. A ShoppingList nincs összekötve a receptekkel
+7. Két különböző Recipe interface létezik (models/recipe.ts vs weekly-menu-planner.ts)
+
+Csináld meg a következőket:
+
+1. TÖRÖLD a teljes tartalmát ezeknek a fájloknak:
+   - src/app/models/recipe.ts
+   - src/app/models/categories.ts
+   - src/app/models/shopping.ts
+   (A units.ts maradhat, de bővítsd ha kell.)
+
+2. HOZD LÉTRE az alábbi új fájlokat a src/app/models/ mappában:
+
+   a) user.ts — User interface:
+      - uid, name, email, avatarUrl (string | null)
+      - preferences beágyazott objektum: diet (string[]), dailyCalorieGoal (number),
+        householdSize (number), measurementSystem ('metric'|'imperial'), theme ('light'|'dark'|'system')
+      - createdAt, updatedAt (string — ISO dátum, kommentben: "Firestore Timestamp")
+
+   b) category.ts — Category interface:
+      - id, name, type ('recipe'|'ingredient'), icon (string — emoji), sortOrder (number)
+      - createdBy (string | null), createdAt (string)
+
+   c) ingredient.ts — Ingredient interface:
+      - id, name, categoryId (string — hivatkozás ingredient típusú Category-ra)
+      - defaultUnit (string), createdBy (string), createdAt (string)
+
+   d) recipe.ts — Recipe és RecipeIngredient interface:
+      - Recipe: id, title, description, imageUrl, categoryId (string),
+        difficulty ('könnyű'|'közepes'|'haladó'), prepTime (number — percben),
+        calories (number), servings (number), diet (string[]),
+        nutrition: { protein: number, carbs: number, fat: number },
+        ingredients: RecipeIngredient[],
+        steps: string[],
+        ownerId (string), isPublic (boolean), createdAt, updatedAt
+      - RecipeIngredient: ingredientId, ingredientName (denormalizált), amount (number), unit (string)
+
+   e) weekly-menu.ts — WeeklyMenu, MealSlot, Day, MealType:
+      - Day type: 'hetfo'|'kedd'|'szerda'|'csutortok'|'pentek'|'szombat'|'vasarnap'
+      - MealType type: 'reggeli'|'ebed'|'vacsora'
+      - MealSlot: day (Day), mealType (MealType), recipeId (string|null),
+        recipeTitle, recipeImageUrl, recipePrepTime, recipeCalories (denormalizált, mind nullable)
+      - WeeklyMenu: id, userId, weekStart (string — ISO dátum, hétfő),
+        slots: MealSlot[], createdAt, updatedAt
+
+   f) shopping-list.ts — ShoppingList és ShoppingItem:
+      - ShoppingItem: id, ingredientId, ingredientName (denormalizált),
+        totalAmount (number), unit (string), categoryId, categoryName (denormalizált),
+        checked (boolean), isManual (boolean), fromRecipeIds (string[])
+      - ShoppingList: id, userId, weeklyMenuId, items: ShoppingItem[],
+        generatedAt, updatedAt
+
+   g) index.ts — barrel export: minden interface-t és type-ot exportálj innen
+
+3. Minden fájl tetejére tegyél rövid JSDoc kommentet a fő interface fölé,
+   ami elmagyarázza a Firestore kollekció nevét és a denormalizálási döntéseket.
+
+4. Az id mezők legyenek string típusúak. Az összes dátum mező string,
+   mellette kommentben: // Firestore Timestamp
+
+5. Named export-ot használj mindenhol (ne default-ot).</div>
+        </div>
+    
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+    
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">A csatolt TypeScript interface fájlok alapján hozd létre a docs/DATAMODEL.md fájlt.
+
+A fájl tartalma:
+1. Rövid bevezető: Firestore NoSQL adatbázist használunk, denormalizálunk ahol a UI ezt igényli
+2. Minden entitáshoz egy szekció:
+   - Entitás neve, Firestore kollekció neve, rövid leírás (1 mondat)
+   - Mezők táblázat: | Mező | Típus | Leírás | Kötelező? |
+   - Beágyazott al-interface-ek (RecipeIngredient, MealSlot, ShoppingItem) külön táblázatban
+3. Kapcsolatok szekció:
+   - | Kapcsolat | Típus | Leírás | formátumú táblázat
+   - Denormalizálási döntések szöveges magyarázata
+4. ASCII-art vagy Mermaid diagram az entitás-kapcsolatokról
+
+Hozd létre a docs/ mappát ha nem létezik, és írd bele a DATAMODEL.md-t.
+A nyelv legyen magyar, a mezőnevek angolul. A stílus tömör és informatív.</div>
+        </div>
+    
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+    
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">Írd át a src/app/services/recipe.service.ts fájlt az új Recipe modellre.
+A csatolt fájlban látod a jelenlegi service-t és az új Recipe interface-t.
+
+A konkrét változtatások:
+
+1. CSERÉLD a _recipes signal kezdőértékét. A meglévő 5 receptet alakítsd át
+   az új Recipe struktúrára:
+   - A meta stringből ("Elkészítési idő: 30 perc | Kalória: 320 | Nehézség: Könnyű")
+     bontsd ki: prepTime: 30, calories: 320, difficulty: 'könnyű'
+   - Adj hozzá minden recepthez:
+     * id-t (pl. 'recipe_1', 'recipe_2', ...)
+     * 3-5 hozzávalót RecipeIngredient-ként (ingredientId: 'ing_xxx', ingredientName, amount, unit)
+     * 3-5 elkészítési lépést (steps: string[])
+     * servings: 4
+     * ownerId: 'user_demo'
+     * isPublic: true
+     * nutrition: { protein, carbs, fat } becsült értékekkel
+     * categoryId-t (pl. 'cat_leves', 'cat_foetel') a badges tömb helyett
+     * diet: string[] (pl. ['vegetáriánus'] ha releváns, egyébként [])
+     * description (a régi desc mező átnevezve)
+     * imageUrl (a régi image mező átnevezve)
+     * createdAt, updatedAt: new Date().toISOString()
+
+2. FRISSÍTSD a filteredRecipes computed signal-t:
+   - A keresés title ÉS description mezőben keressen
+   - A kategória szűrés categoryId alapján működjön (ne badges tömb)
+   - ADD HOZZÁ: _selectedDifficulty signal + difficulty szűrés
+   - ADD HOZZÁ: _maxPrepTime signal + maxPrepTime szűrés
+
+3. BŐVÍTSD a sortBy opciókat: 'prepTimeAsc' | 'caloriesAsc' | 'newest'
+   és implementáld a hozzájuk tartozó rendezési logikát.
+
+4. CSERÉLD:
+   - deleteRecipe(title) → deleteRecipe(id: string) — id alapján töröljön
+   - getRecipeByTitle(title) → getRecipeById(id: string) — id alapján keressen
+   - addRecipe() fogadja az új Recipe típust
+
+5. Az import-ot cseréld: import { Recipe, RecipeIngredient } from '../models/index'
+
+A Signal-alapú állapotkezelés MARADJON: WritableSignal, computed, signal().
+Ne használj Observable-t.</div>
+        </div>
+    
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+    
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">A Recipe modell megváltozott. Módosítsd a csatolt template és komponens fájlokat.
+
+A.) MÓDOSÍTSD: src/app/recipe-catalog/recipe-list/recipe-list.html
+
+Régi → Új mező-megfeleltetés:
+- recipe.desc → recipe.description
+- recipe.meta → TÖRÖLD, helyette három külön elem:
+  <span>{{ recipe.prepTime }} perc</span>
+  <span>{{ recipe.calories }} kcal</span>
+  <span>{{ recipe.difficulty }}</span>
+- recipe.badges *ngFor → egyetlen badge: recipe.categoryId
+  (ideiglenesen a categoryId stringet jelenítsd meg, a kategória nevére
+  a 7. héten cseréljük, amikor a CategoryService kész)
+- recipe.image → recipe.imageUrl
+- A recipe.own badge-et cseréld: *ngIf="recipe.ownerId === 'user_demo'"
+
+B.) MÓDOSÍTSD: src/app/recipe-catalog/recipe-detail/recipe-detail.html
+
+- A meglévő tartalom mellé ADD HOZZÁ:
+  * Hozzávalók szekció: <ul> lista, ahol minden RecipeIngredient megjelenik:
+    "{{ ing.amount }} {{ ing.unit }} {{ ing.ingredientName }}"
+  * Elkészítési lépések szekció: <ol> számozott lista a recipe.steps-ből
+  * Tápérték szekció: fehérje/szénhidrát/zsír megjelenítés
+  * Adag-skálázó: két gomb (+/–) ami egy lokális currentServings változót
+    módosít, és a hozzávalók mennyiségét arányosan számítja:
+    megjelenített = ing.amount * (currentServings / recipe.servings)
+- A régi mezőneveket is cseréld (recipe.desc → recipe.description, stb.)
+
+C.) MÓDOSÍTSD: src/app/recipe-catalog/recipe-editor/recipe-editor.html ÉS recipe-editor.ts
+
+A FormGroup-ot és a template-et frissítsd:
+- meta input → TÖRÖLD, helyette:
+  * prepTime: number input (label: "Elkészítési idő (perc)")
+  * calories: number input (label: "Kalória")
+  * difficulty: <select> három opcióval (könnyű/közepes/haladó)
+- badges checkbox → categoryId <select> dropdown
+  (opciók egyelőre hardcode-olva: Leves, Főétel, Desszert, Saláta, Reggeli, Tészta)
+- desc → description (FormControl név és input label is)
+- image → imageUrl
+- ADD HOZZÁ: ingredients szekció FormArray-jel:
+  * Dinamikus sorok: ingredientName (text input), amount (number), unit (select)
+  * "+ Hozzávaló" gomb → új sor hozzáadása
+  * "×" gomb minden sor végén → sor törlése
+- ADD HOZZÁ: steps szekció FormArray-jel:
+  * Dinamikus szöveges sorok (textarea)
+  * "+ Lépés" gomb, "×" gomb soronként
+
+A FormBuilder konfigurációt (this.fb.group({...})) frissítsd az új mezőkre,
+a Validators-öket tartsd meg (title: required, description: required,
+legalább 1 ingredient, legalább 1 step).
+
+A saveRecipe() metódusban az összeállított Recipe objektumot frissítsd az új struktúrára.</div>
+        </div>
+    
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+    
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">A weekly-menu-planner komponensben jelenleg egy lokális Recipe interface
+és egy 2D tömb (menu: (Recipe|null)[][]) van. Cseréld le a WeeklyMenu
+és MealSlot modellekre.
+
+A.) MÓDOSÍTSD: src/app/weekly-menu-planner/weekly-menu-planner.ts
+
+1. TÖRÖLD a lokális "export interface Recipe { title, image, time, calories }"
+   definíciót a fájl tetejéről.
+2. ADD HOZZÁ az importot: import { WeeklyMenu, MealSlot, Day, MealType } from '../models/index'
+3. CSERÉLD a "menu: (Recipe | null)[][]" property-t erre:
+   currentMenu: WeeklyMenu — egy objektum a slots tömbbel
+4. A mock adatokat (a 7 napos 2D tömb) alakítsd át MealSlot tömbbé:
+   - A meglévő receptekhez rendeld hozzá a day és mealType mezőket
+   - Pl. a Hétfő/Reggeli slot: { day: 'hetfo', mealType: 'reggeli',
+     recipeId: 'recipe_temp_1', recipeTitle: 'Gyümölcsös zabkása',
+     recipeImageUrl: '...', recipePrepTime: 10, recipeCalories: 250 }
+   - Az üres slotokat NE vedd bele a tömbbe (a slot hiánya = üres)
+5. A getDayCalories(dayIdx) metódust írd át:
+   getDayCalories(day: Day): number — a slots tömbből számolja
+6. A prevWeek/nextWeek/weekLabel logika MARADJON változatlan.
+7. A menu-calendar komponens @Input-ját is cseréld: menu → slots: MealSlot[]
+   és adaptáld a template-et.
+
+B.) MÓDOSÍTSD: src/app/weekly-menu-planner/mini-recipe-card/mini-recipe-card.ts
+
+1. Az @Input() recipe!: Recipe; CSERÉLD: @Input() slot!: MealSlot;
+2. Az importot cseréld: import { MealSlot } from '../../models/index'
+
+C.) MÓDOSÍTSD: src/app/weekly-menu-planner/mini-recipe-card/mini-recipe-card.html
+
+- recipe.title → slot.recipeTitle
+- recipe.image → slot.recipeImageUrl
+- recipe.time → slot.recipePrepTime (és add hozzá: + ' perc')
+- recipe.calories → slot.recipeCalories (és add hozzá: + ' kcal')
+
+D.) MÓDOSÍTSD a menu-calendar template-et is hasonlóan.
+
+A heti menü HTML-jében (weekly-menu-planner.html) is cseréld:
+- A *ngFor="let day of days; let i = index" + menu[i][j] logikát
+  cseréld a slots tömb szűrésére:
+  getSlot(day: Day, mealType: MealType): MealSlot | undefined
+  metódust hozz létre ami a slots-ból kiszűri a megfelelő slotot.</div>
+        </div>
+    
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+    
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">Írd át a src/app/services/shopping.service.ts fájlt az új ShoppingList
+és ShoppingItem modellre.
+
+A.) MÓDOSÍTSD: src/app/services/shopping.service.ts
+
+1. A _sections: WritableSignal<Section[]> CSERÉLD erre:
+   private _currentList = signal<ShoppingList | null>(null);
+   readonly currentList = this._currentList.asReadonly();
+
+2. A mock adatokat alakítsd át egyetlen ShoppingList objektummá:
+   - id: 'list_demo_1'
+   - userId: 'user_demo'
+   - weeklyMenuId: 'menu_demo_1'
+   - items: ShoppingItem[] — a régi section/items struktúrát "laposítsd ki":
+     Minden tételhez adj hozzá: ingredientId, categoryId, categoryName,
+     isManual: false, fromRecipeIds: []
+   - generatedAt, updatedAt: new Date().toISOString()
+
+3. ADD HOZZÁ computed signal-t a csoportosításhoz:
+   readonly groupedItems = computed(() => {
+     // a currentList().items-et categoryId szerint csoportosítja
+     // visszaad egy Map<string, { categoryName: string, items: ShoppingItem[] }>-t
+   })
+
+4. A totalItems, checkedItems, progressPercent computed signal-eket
+   frissítsd a currentList().items-re.
+
+5. A sectionsProgress-t cseréld categoryProgress-ra
+   (categoryId szerint csoportosított progress).
+
+6. Az onItemToggled, onItemDeleted, onItemAdded metódusok
+   az items tömböt módosítsák (nem section-t):
+   - onItemToggled(itemId: string)
+   - onItemDeleted(itemId: string)
+   - onItemAdded(item: Partial<ShoppingItem>)
+
+B.) MÓDOSÍTSD a shopping-list komponenseket:
+- A template-ekben section.id → category szerinti csoportosítás
+- A section.items → groupedItems() computed signal használata
+- A list-section, list-item, list-editor komponensek @Input/@Output-jait
+  frissítsd az új típusokra
+
+Ne feledd: Signal-ek maradnak, NE cseréld Observable-re!
+            </div>
+        </div>
+
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+    
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">Írd át a src/app/services/profile.service.ts fájlt, hogy az új User modellt használja.
+
+1. Az importot cseréld: import { User } from '../models/index'
+2. A UserProfile és DietFlags lokális interface-eket TÖRÖLD
+   (helyettük a User modellből jönnek)
+3. A _user signal típusát cseréld User-re
+4. A kezdőértéket alakítsd át az új User struktúrára:
+   - uid: 'user_demo'
+   - preferences objektumba költöztesd a diet, calorie, household, theme, units mezőket
+   - avatarUrl: null
+   - createdAt, updatedAt: new Date().toISOString()
+5. A különálló _diets, _calorie, _household, _theme, _units signal-eket
+   OLVASZD BE a _user signal preferences objektumába
+   (az updateUser metódus deep merge-öljön)
+6. A meglévő getter-ek (diets, calorie, stb.) legyenek computed signal-ek
+   amik a _user().preferences-ből olvassák ki az értéket
+
+A profil komponens template-jét (profile.html) NE módosítsd most,
+csak a service réteget. A template-et majd a profil komponens
+frissítésekor igazítjuk (ha szükséges).</div>
+        </div>
+
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">A service-eimben levő beégetett mock adatokat ki kell szerveznem
+JSON fájlokba. Hozd létre az alábbi fájlokat:
+
+1. HOZD LÉTRE: src/assets/data/categories.json
+   Tartalom: 12 kategória, mindkét típusból:
+   Recipe típusú (6 db): Leves, Főétel, Desszert, Saláta, Reggeli, Tészta
+   Ingredient típusú (6 db): Zöldség & Gyümölcs, Hús & Hal, Tejtermékek,
+   Pékáru, Szárazáru & Konzerv, Fűszerek
+   Minden kategóriában: id (pl. "cat_leves"), name, type, icon (emoji), sortOrder, createdBy: null
+
+2. HOZD LÉTRE: src/assets/data/ingredients.json
+   Tartalom: legalább 35 hozzávaló. Alapozz a receptek hozzávalóira + adj hozzá
+   gyakori konyhai alapanyagokat. Minden hozzávalóban:
+   id (pl. "ing_paradicsom"), name, categoryId (ingredient típusú kategória!),
+   defaultUnit, createdBy: "user_demo"
+
+3. HOZD LÉTRE: src/assets/data/recipes.json
+   Tartalom: legalább 15 recept az új Recipe struktúrában.
+   - A meglévő 5-öt vedd át a service-ből, és adj hozzá 10-12 újat
+   - Változatos kategóriák, nehézségek (könnyű/közepes/haladó), elkészítési idők
+   - Minden receptben 3-6 hozzávaló és 3-6 lépés
+   - A categoryId-k EGYEZZENEK a categories.json ID-kkal
+   - Az ingredientId-k EGYEZZENEK az ingredients.json ID-kkal
+   - Az ingredientName-ek EGYEZZENEK az ingredients.json name mezőkkel
+   - Magyar ételnevek és leírások
+   - Változatos Unsplash képek (étel kategória szerint különböző photo ID-k):
+     Levesek: photo-1547592166-23ac45744acd
+     Húsételek: photo-1504674900247-0877df9cc836
+     Desszertek: photo-1551024601-bec78aea704b
+     Saláták: photo-1512621776951-a57141f2eefd
+     Reggeli: photo-1533089860892-a7c6f0a88666
+     Tészták: photo-1551183053-bf91a1d81141
+
+4. HOZD LÉTRE: src/assets/data/weekly-menu.json
+   Tartalom: 1 WeeklyMenu objektum 12-14 kitöltött MealSlot-tal.
+   A recipeId-k EGYEZZENEK a recipes.json ID-kkal!
+   A denormalizált mezők (recipeTitle, recipeImageUrl, stb.) is egyezzenek.
+   weekStart: a mai hét hétfőjének ISO dátuma.
+
+5. HOZD LÉTRE: src/assets/data/shopping-list.json
+   Tartalom: 1 ShoppingList a heti menü alapján, 15-20 tétellel.
+   Az ingredientId-k és categoryId-k egyezzenek a többi JSON-nal.
+
+6. HOZD LÉTRE: src/assets/data/users.json
+   Tartalom: 1 demo user az új User struktúrában.
+
+KRITIKUS: Minden ID hivatkozás legyen konzisztens a fájlok között!
+Ha a recipe "recipe_3" hivatkozik "ing_paradicsom"-ra, az LÉTEZZEN
+az ingredients.json-ban. Ha egy ingredient categoryId-ja "cat_ing_zoldseg",
+az LÉTEZZEN a categories.json-ban type: "ingredient"-tel.
+
+A JSON fájlok legyenek formázottak (2 space indent), érvényesek,
+UTF-8 kódolásúak, magyar ékezetes karakterekkel.</div>
+        </div>
+
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">Most a RecipeService-ben levő beégetett adatokat lecserélem JSON fetch-re.
+Módosítsd a src/app/services/recipe.service.ts fájlt:
+
+1. A _recipes signal kezdőértéke legyen ÜRES TÖMB: signal<Recipe[]>([])
+
+2. ADD HOZZÁ ezeket a signal-eket:
+   private _loading = signal<boolean>(false);
+   private _error = signal<string | null>(null);
+   readonly loading = this._loading.asReadonly();
+   readonly error = this._error.asReadonly();
+
+3. HOZD LÉTRE a loadRecipes() metódust:
+   async loadRecipes(): Promise<void> {
+     if (this._loading()) return; // dupla hívás védelem
+     this._loading.set(true);
+     this._error.set(null);
+     try {
+       const response = await fetch('/assets/data/recipes.json');
+       if (!response.ok) throw new Error(`HTTP ${response.status}`);
+       const recipes: Recipe[] = await response.json();
+       this._recipes.set(recipes);
+     } catch (err) {
+       this._error.set('Nem sikerült betölteni a recepteket. Próbáld újra később.');
+       console.error('RecipeService.loadRecipes error:', err);
+     } finally {
+       this._loading.set(false);
+     }
+   }
+
+4. A KONSTRUKTORBAN hívd meg: this.loadRecipes();
+
+5. TÖRÖLD a régi beégetett receptek tömbjét a signal kezdőértékéből.
+
+6. Ugyanezt a mintát alkalmazd — HOZD LÉTRE a következő service fájlokat:
+
+   a) src/app/services/category.service.ts
+      - loadCategories() → fetch('/assets/data/categories.json')
+      - _categories, loading, error signal-ek
+      - recipeCategories computed signal (type === 'recipe' szűrés)
+      - ingredientCategories computed signal (type === 'ingredient' szűrés)
+
+   b) src/app/services/ingredient.service.ts
+      - loadIngredients() → fetch('/assets/data/ingredients.json')
+      - _ingredients, loading, error signal-ek
+      - searchResults(term: string) computed signal az autocomplete-hez
+
+Minden service legyen @Injectable({ providedIn: 'root' }) és standalone.</div>
+        </div>
+
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">A RecipeService-ben most van loading és error signal.
+Módosítsd a recipe-catalog komponenst, hogy kezelje a 3 állapotot.
+
+A.) HOZD LÉTRE: src/app/recipe-catalog/skeleton-card/skeleton-card.ts
+   Egy üres skeleton loader komponens ami a recept kártya alakját utánozza:
+   - Szürke háttér blokkok (kép placeholder, cím sor, meta sor, leírás sorok)
+   - CSS @keyframes shimmer animáció (balról jobbra mozgó fényes csík)
+   - Ugyanaz a méret és border-radius, mint a valódi recipe-card-nak
+   - Használd a design token-eket: var(--color-muted), var(--radius-lg), stb.
+
+B.) HOZD LÉTRE: src/app/recipe-catalog/skeleton-card/skeleton-card.html
+C.) HOZD LÉTRE: src/app/recipe-catalog/skeleton-card/skeleton-card.scss
+
+D.) MÓDOSÍTSD: src/app/recipe-catalog/recipe-catalog.ts
+   - Importáld a SkeletonCard-ot
+   - Injektáld a RecipeService-t publikusan (hogy a template elérhesse)
+
+E.) MÓDOSÍTSD: src/app/recipe-catalog/recipe-catalog.html
+   Cseréld le a jelenlegi tartalom részt (a "Recept lista" section-t) erre a struktúrára:
+
+   LOADING állapot (recipeService.loading()):
+   - 6 db skeleton-card a grid-ben (a grid CSS-t használva)
+   - Aria: aria-busy="true", role="status", "Receptek betöltése..." szöveggel
+     (sr-only, screen reader-nek)
+
+   ERROR állapot (!recipeService.loading() && recipeService.error()):
+   - Piros ikon (⚠️ vagy SVG)
+   - Hibaüzenet: {{ recipeService.error() }}
+   - "Próbáld újra" gomb: (click)="recipeService.loadRecipes()"
+   - CSS: háttér var(--color-error-bg), szegély var(--color-error), padding
+
+   EMPTY állapot (nincs loading, nincs error, filteredRecipes.length === 0):
+   - A meglévő <app-empty-state> komponenst használd (ahogy most is van)
+
+   SUCCESS állapot (van adat):
+   - A meglévő <app-recipe-list> komponenst használd (ahogy most is van)
+
+A négyféle állapotot *ngIf / *ngIf else / ng-template-tel VAGY
+@if/@else (Angular 17+ control flow) szintaxissal oldd meg —
+használd azt, amelyik a projektben már be van vezetve.</div>
+        </div>
+
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">Firebase-t adok az Angular alkalmazásomhoz. A Firebase Console-ból
+kimásolt konfiguráció:
+
+const firebaseConfig = {
+  apiKey: "...",
+  authDomain: "...",
+  projectId: "...",
+  storageBucket: "...",
+  messagingSenderId: "...",
+  appId: "..."
+};
+
+Csináld meg a következőket:
+
+1. HOZD LÉTRE: src/environments/environment.ts
+   export const environment = {
+     production: false,
+     firebaseConfig: { /* a fenti config ide */ }
+   };
+
+2. HOZD LÉTRE: src/environments/environment.prod.ts
+   Ugyanaz, de production: true.
+
+3. HOZD LÉTRE: src/app/firebase.config.ts
+   - import { initializeApp } from 'firebase/app'
+   - import { getFirestore } from 'firebase/firestore'
+   - import { environment } from '../environments/environment'
+   - const app = initializeApp(environment.firebaseConfig)
+   - export const db = getFirestore(app)
+
+4. MÓDOSÍTSD: src/app/app.config.ts
+   - Importáld a firebase.config.ts-t (side-effect import a Firebase inicializáláshoz)
+   - Egyéb változás NE kell — nem használunk @angular/fire provider-eket
+
+5. MÓDOSÍTSD: .gitignore
+   - ADD HOZZÁ: src/environments/environment.ts és src/environments/environment.prod.ts
+   (a Firebase config ne kerüljön be a git repo-ba)
+
+NE használj @angular/fire csomagot — a natív Firebase JS SDK v9+ moduláris
+API-ját használd közvetlenül.
+
+FIGYELEM: A Firestore jelenleg "test mode"-ban van (allow read, write: if true).
+Ez 30 napig él. A 8. héten (Security) cseréljük valódi szabályokra.</div>
+        </div>
+
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">Hozz létre egy seed service-t, ami a JSON fájljaimból feltölti az adatokat
+a Firestore-ba.
+
+HOZD LÉTRE: src/app/services/seed.service.ts
+
+@Injectable({ providedIn: 'root' })
+export class SeedService {
+
+  // Fő metódus: az összes JSON-t feltölti Firestore-ba
+  async seedDatabase(): Promise<void> {
+    1. Fetch-eld az összes JSON-t párhuzamosan (Promise.all):
+       /assets/data/categories.json → 'categories' kollekció
+       /assets/data/ingredients.json → 'ingredients' kollekció
+       /assets/data/recipes.json → 'recipes' kollekció
+       /assets/data/weekly-menu.json → 'weeklyMenus' kollekció (1 dokumentum)
+       /assets/data/shopping-list.json → 'shoppingLists' kollekció (1 dokumentum)
+       /assets/data/users.json → 'users' kollekció (1 dokumentum)
+
+    2. Használj Firestore WriteBatch-et:
+       - import { writeBatch, doc, collection } from 'firebase/firestore'
+       - import { db } from '../firebase.config'
+       - const batch = writeBatch(db)
+       - Minden JSON elem: batch.set(doc(db, kollekcióNév, elem.id), elem)
+       - await batch.commit()
+       - Ha több mint 500 elem van összesen, bontsd több batch-re
+
+    3. Console.log minden lépésnél:
+       "Feltöltés: categories (12 db)..."
+       "Feltöltés: ingredients (35 db)..."
+       stb.
+       Végül: "✅ Seed kész! Összesen X dokumentum feltöltve."
+
+    4. Hiba esetén: throw-olj értelmes hibaüzenetet
+  }
+
+  // Segéd metódus: törli az összes kollekciót (fejlesztéshez)
+  async clearDatabase(): Promise<void> {
+    - Az összes kollekcióból lekérdezi a dokumentumokat (getDocs)
+    - WriteBatch-csel törli őket
+    - Console.log: "Törölve: X dokumentum"
+  }
+}
+
+PLUSZ — MÓDOSÍTSD: src/app/profile/profile.html (vagy hozz létre admin részt)
+Adj hozzá két gombot a profil oldal aljára (fejlesztői eszközök szekció):
+- "🌱 Adatbázis feltöltése" gomb → seedService.seedDatabase()
+- "🗑️ Adatbázis törlése" gomb → seedService.clearDatabase()
+- Loading spinner/disable a gomb mellett amíg fut
+- Eredmény toast: "Sikeres feltöltés!" vagy "Hiba: {{ errorMessage }}"</div>
+        </div>
+
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">A RecipeService-ben a JSON fetch-et cseréld Firestore lekérdezésre.
+
+MÓDOSÍTSD: src/app/services/recipe.service.ts
+
+1. ADD HOZZÁ az importokat:
+   import { collection, getDocs, query, orderBy, onSnapshot, Unsubscribe }
+     from 'firebase/firestore';
+   import { db } from '../firebase.config';
+
+2. A loadRecipes() metódust ÍRD ÁT:
+   async loadRecipes(): Promise<void> {
+     if (this._loading()) return;
+     this._loading.set(true);
+     this._error.set(null);
+     try {
+       const q = query(collection(db, 'recipes'), orderBy('createdAt', 'desc'));
+       const snapshot = await getDocs(q);
+       const recipes = snapshot.docs.map(doc => ({
+         ...doc.data(),
+         id: doc.id
+       }) as Recipe);
+       this._recipes.set(recipes);
+     } catch (err) {
+       this._error.set('Nem sikerült betölteni a recepteket. Ellenőrizd az internetkapcsolatot.');
+       console.error('Firestore hiba:', err);
+     } finally {
+       this._loading.set(false);
+     }
+   }
+
+3. ADD HOZZÁ egy real-time verziót is (kikommentezve, referenciának):
+   private unsubscribe?: Unsubscribe;
+
+   loadRecipesRealtime(): void {
+     this._loading.set(true);
+     const q = query(collection(db, 'recipes'), orderBy('createdAt', 'desc'));
+     this.unsubscribe = onSnapshot(q,
+       (snapshot) => {
+         const recipes = snapshot.docs.map(doc => ({
+           ...doc.data(), id: doc.id
+         }) as Recipe);
+         this._recipes.set(recipes);
+         this._loading.set(false);
+       },
+       (error) => {
+         this._error.set('Valós idejű kapcsolat megszakadt.');
+         this._loading.set(false);
+       }
+     );
+   }
+
+   // Komponens elhagyásakor hívandó:
+   stopRealtimeListener(): void {
+     this.unsubscribe?.();
+   }
+
+4. A konstruktorban HAGYD BENT a this.loadRecipes() hívást
+   (a real-time verziót kommentezd ki).
+
+5. A szűrés, rendezés, computed signal-ek NE VÁLTOZZANAK —
+   azok kliens-oldalon maradnak.
+
+6. A CRUD írási műveletek (addRecipe, deleteRecipe) egyelőre MARADJANAK
+   lokális signal-manipuláció — a 7. héten csináljuk meg a Firestore CRUD-ot.
+
+TÖRÖLD a régi fetch('/assets/data/recipes.json') hívást.</div>
+        </div>
+
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+
+        <div class="message user">
+            <span class="label">Te:</span>
+            <div class="content">A RecipeService már Firestore-ból olvas. Ugyanazt a mintát alkalmazd
+a többi service-re is.
+
+MÓDOSÍTSD: src/app/services/category.service.ts
+- A fetch('/assets/data/categories.json') CSERÉLD:
+  const q = query(collection(db, 'categories'), orderBy('sortOrder', 'asc'));
+  const snapshot = await getDocs(q);
+- Minden más (signal-ek, computed, loading, error) marad.
+
+MÓDOSÍTSD: src/app/services/ingredient.service.ts
+- A fetch('/assets/data/ingredients.json') CSERÉLD:
+  const q = query(collection(db, 'ingredients'), orderBy('name', 'asc'));
+  const snapshot = await getDocs(q);
+- Minden más marad.
+
+MÓDOSÍTSD: src/app/services/shopping.service.ts
+- A fetch('/assets/data/shopping-list.json') CSERÉLD:
+  import { where } from 'firebase/firestore';
+  const q = query(
+    collection(db, 'shoppingLists'),
+    where('userId', '==', 'user_demo')
+  );
+  const snapshot = await getDocs(q);
+  if (!snapshot.empty) {
+    this._currentList.set({ ...snapshot.docs[0].data(), id: snapshot.docs[0].id } as ShoppingList);
+  }
+- Minden más marad.
+
+Ha van WeeklyMenu service (vagy a komponensben van):
+- A fetch CSERÉLD:
+  const q = query(
+    collection(db, 'weeklyMenus'),
+    where('userId', '==', 'user_demo'),
+    orderBy('createdAt', 'desc'),
+    limit(1)
+  );
+  import { limit } from 'firebase/firestore';
+
+MINDEN service-ben:
+- A Firestore importok: collection, getDocs, query, orderBy, where (ahol kell)
+- A db importja: import { db } from '../firebase.config'
+- Error kezelés: emberi nyelven, ne technikai Firestore kódot mutasson
+- Loading/error signal-ek megmaradnak
+- A CRUD írási műveletek MARADNAK lokális — a 7. héten implementáljuk Firestore-ban</div>
+        </div>
+
+        <div class="message ai">
+            <span class="label">AI (GitHub Copilot):</span>
+            <div class="content"></div>
+        </div>
+
+    </div>
+</body>
+</html>

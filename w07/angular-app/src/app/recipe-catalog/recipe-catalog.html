@@ -1,0 +1,31 @@
+<section class="recipe-catalog">
+  <header>
+    <h1>Recept Katalógus</h1>
+    <nav class="header-actions" aria-label="Modul akciók">
+      <button class="action-btn" (click)="openEditor()">Új recept hozzáadása</button>
+      <button class="action-btn">Kategóriák</button>
+    </nav>
+  </header>
+
+  <section aria-label="Keresés és szűrés">
+    <app-search-bar></app-search-bar>
+  </section>
+
+  <section aria-label="Recept lista">
+    <ng-container *ngIf="filteredRecipes.length > 0; else empty">
+      <app-recipe-list [recipes]="filteredRecipes"></app-recipe-list>
+    </ng-container>
+    <ng-template #empty>
+      <app-empty-state></app-empty-state>
+    </ng-template>
+  </section>
+</section>
+
+<!-- Modal dialógus overlay a body végén -->
+<ng-container *ngIf="showEditor">
+  <div class="dialog-backdrop" (click)="closeEditor()"></div>
+  <div class="dialog" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1001;">
+    <app-recipe-editor (close)="closeEditor()" (save)="addRecipe($event)"></app-recipe-editor>
+    <button class="dialog-close" (click)="closeEditor()">×</button>
+  </div>
+</ng-container>

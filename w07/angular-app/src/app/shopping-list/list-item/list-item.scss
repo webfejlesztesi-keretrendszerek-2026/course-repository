@@ -1,0 +1,61 @@
+
+/* Styles for individual shopping item - aligned with plan */
+.shopping-item {
+	display: flex;
+	align-items: center;
+	gap: var(--space-sm);
+	padding: var(--space-sm) var(--space-md);
+	border-bottom: 1px solid var(--color-border);
+	font-size: var(--font-size-md);
+	transition: background var(--transition-fast);
+}
+.shopping-item:last-child {
+	border-bottom: none;
+}
+.shopping-item.checked {
+	text-decoration: line-through;
+	color: var(--color-muted);
+	opacity: 0.7;
+	background: var(--color-border);
+}
+.item-checkbox {
+	accent-color: var(--color-success);
+	width: 1.2em;
+	height: 1.2em;
+	cursor: pointer;
+}
+.item-name {
+	flex: 1;
+	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: var(--font-size-md);
+}
+.item-amount {
+	min-width: 60px;
+	text-align: right;
+	cursor: pointer;
+	padding: var(--space-xxs) var(--space-xs);
+	border-radius: var(--radius-sm);
+	background: var(--color-surface);
+	font-size: var(--font-size-sm);
+}
+.item-amount:focus {
+	border: 1px solid var(--color-primary);
+	outline: none;
+}
+.item-delete {
+	background: var(--color-error);
+	color: #fff;
+	border: none;
+	border-radius: var(--radius-sm);
+	padding: var(--space-xxs) var(--space-xs);
+	cursor: pointer;
+	transition: var(--transition-fast);
+}
+.item-delete:hover {
+	background: var(--color-accent);
+}
+
+
