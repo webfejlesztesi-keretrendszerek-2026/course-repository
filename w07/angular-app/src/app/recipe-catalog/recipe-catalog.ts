@@ -3,8 +3,10 @@ import { RecipeList } from './recipe-list/recipe-list';
 import { SearchBar } from './search-bar/search-bar';
 import { EmptyState } from './empty-state/empty-state';
 import { NgIf } from '@angular/common';
+import { NgForOf } from '@angular/common';
 import { Recipe } from '../models/recipe';
 import { RecipeEditor } from './recipe-editor/recipe-editor';
+import { SkeletonCard } from './skeleton-card/skeleton-card';
 import { RecipeService } from '../services/recipe.service';
 
 const recipeImage = 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80';
@@ -12,7 +14,7 @@ const recipeImage = 'https://images.unsplash.com/photo-1504674900247-0877df9cc83
 @Component({
   selector: 'app-recipe-catalog',
   standalone: true,
-  imports: [RecipeList, SearchBar, EmptyState, NgIf, RecipeEditor],
+  imports: [RecipeList, SearchBar, EmptyState, NgIf, NgForOf, RecipeEditor, SkeletonCard],
   templateUrl: './recipe-catalog.html',
   styleUrl: './recipe-catalog.scss',
 })

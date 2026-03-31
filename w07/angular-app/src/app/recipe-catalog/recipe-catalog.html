@@ -12,11 +12,26 @@
   </section>
 
   <section aria-label="Recept lista">
-    <ng-container *ngIf="filteredRecipes.length > 0; else empty">
-      <app-recipe-list [recipes]="filteredRecipes"></app-recipe-list>
+    <ng-container *ngIf="recipeService.loading(); else notLoading">
+      <div class="recipe-grid" aria-busy="true">
+        <app-skeleton-card *ngFor="let n of [1,2,3,4,5,6]"></app-skeleton-card>
+      </div>
     </ng-container>
-    <ng-template #empty>
-      <app-empty-state></app-empty-state>
+    <ng-template #notLoading>
+      <ng-container *ngIf="recipeService.error(); else noError">
+        <div class="error-panel" role="status">
+          <p>Hiba történt a receptek betöltésekor: {{ recipeService.error() }}</p>
+          <button class="action-btn" (click)="recipeService.loadRecipes()">Újrapróbálás</button>
+        </div>
+      </ng-container>
+      <ng-template #noError>
+        <ng-container *ngIf="filteredRecipes.length > 0; else empty">
+          <app-recipe-list [recipes]="filteredRecipes"></app-recipe-list>
+        </ng-container>
+        <ng-template #empty>
+          <app-empty-state></app-empty-state>
+        </ng-template>
+      </ng-template>
     </ng-template>
   </section>
 </section>
