@@ -30,14 +30,24 @@
 
 	<!-- Desktop/Tablet grid nézet -->
 	<section class="calendar-grid" aria-label="Heti naptár">
-		<app-menu-calendar
-			[days]="days"
-			[slots]="currentMenu.slots"
-			[dayKeys]="dayKeys"
-			[mealTypes]="mealTypes"
-			(editMeal)="onEditMeal($event)"
-			(deleteMeal)="onDeleteMeal($event)">
-		</app-menu-calendar>
+		<div *ngIf="weeklyMenuService.loading(); else loaded">
+			<div class="loading-placeholder">Receptek betöltése…</div>
+		</div>
+		<ng-template #loaded>
+			<ng-container *ngIf="weeklyMenuService.error(); else ok">
+				<div class="error-panel">Hiba: {{ weeklyMenuService.error() }} <button class="action-btn" (click)="weeklyMenuService.loadWeeklyMenu()">Újrapróbálás</button></div>
+			</ng-container>
+			<ng-template #ok>
+				<app-menu-calendar
+					[days]="days"
+					[slots]="currentMenu?.slots || []"
+					[dayKeys]="dayKeys"
+					[mealTypes]="mealTypes"
+					(editMeal)="onEditMeal($event)"
+					(deleteMeal)="onDeleteMeal($event)">
+				</app-menu-calendar>
+			</ng-template>
+		</ng-template>
 	</section>
 
 	<!-- Mobil accordion nézet -->

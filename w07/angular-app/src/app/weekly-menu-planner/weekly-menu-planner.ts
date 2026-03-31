@@ -15,6 +15,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TemplateRef } from '@angular/core';
 import { WeeklyMenu, MealSlot, Day, MealType } from '../models/index';
+import { WeeklyMenuService } from '../services/weekly-menu.service';
 
 export function scrollFactory(overlay: Overlay): () => any {
   return () => overlay.scrollStrategies.block();
@@ -99,31 +100,10 @@ export class WeeklyMenuPlannerComponent implements OnInit {
   ];
   meals = ['Reggeli', 'Ebéd', 'Vacsora'];
 
-  // Menü: [nap][étkezés] = Recipe | null
-  // Current weekly menu (denormalized slots)
-  currentMenu: WeeklyMenu = {
-    id: 'menu_temp_1',
-    userId: 'user_temp',
-    weekStart: new Date().toISOString(),
-    slots: [
-      // Hétfő
-      { day: 'hetfo', mealType: 'reggeli', recipeId: 'recipe_temp_1', recipeTitle: 'Gyümölcsös zabkása', recipeImageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80', recipePrepTime: 10, recipeCalories: 250 },
-      { day: 'hetfo', mealType: 'ebed', recipeId: 'recipe_temp_2', recipeTitle: 'Tojásrántotta', recipeImageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80', recipePrepTime: 15, recipeCalories: 320 },
-      { day: 'hetfo', mealType: 'vacsora', recipeId: 'recipe_temp_3', recipeTitle: 'Csirkés saláta', recipeImageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80', recipePrepTime: 20, recipeCalories: 400 },
-      // Kedd
-      { day: 'kedd', mealType: 'reggeli', recipeId: 'recipe_temp_4', recipeTitle: 'Sajtos szendvics', recipeImageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80', recipePrepTime: 8, recipeCalories: 220 },
-      { day: 'kedd', mealType: 'ebed', recipeId: 'recipe_temp_5', recipeTitle: 'Paradicsomos tészta', recipeImageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80', recipePrepTime: 25, recipeCalories: 480 },
-      // Szerda
-      { day: 'szerda', mealType: 'ebed', recipeId: 'recipe_temp_6', recipeTitle: 'Sült lazac', recipeImageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80', recipePrepTime: 30, recipeCalories: 350 },
-      // Csütörtök
-      { day: 'csutortok', mealType: 'vacsora', recipeId: 'recipe_temp_7', recipeTitle: 'Vegán curry', recipeImageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80', recipePrepTime: 40, recipeCalories: 420 },
-      // Péntek
-      { day: 'pentek', mealType: 'reggeli', recipeId: 'recipe_temp_8', recipeTitle: 'Túrós palacsinta', recipeImageUrl: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80', recipePrepTime: 18, recipeCalories: 280 }
-      // Szombat és Vasárnap üres
-    ],
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  } as WeeklyMenu;
+  // Current weekly menu is provided by WeeklyMenuService
+  get currentMenu(): WeeklyMenu | null {
+    return this.weeklyMenuService.menu();
+  }
 
   // Helper arrays that correspond to Day / MealType keys used by the models
   dayKeys: Day[] = ['hetfo', 'kedd', 'szerda', 'csutortok', 'pentek', 'szombat', 'vasarnap'];
@@ -136,7 +116,7 @@ export class WeeklyMenuPlannerComponent implements OnInit {
 
   currentDialogRef?: MatDialogRef<any>;
 
-  constructor(public dialog: MatDialog, private cdRef: ChangeDetectorRef, private dateAdapter: DateAdapter<Date>) {}
+  constructor(public dialog: MatDialog, private cdRef: ChangeDetectorRef, private dateAdapter: DateAdapter<Date>, public weeklyMenuService: WeeklyMenuService) {}
 
   ngOnInit(): void {
     // register Hungarian locale and set date adapter locale so calendar shows Hungarian names
@@ -144,6 +124,8 @@ export class WeeklyMenuPlannerComponent implements OnInit {
       registerLocaleData(localeHu);
     } catch {}
     try { this.dateAdapter.setLocale('hu'); } catch {}
+    // Load weekly menu from service
+    try { this.weeklyMenuService.loadWeeklyMenu(); } catch {}
   }
 
   openDatePicker(): void {
@@ -233,11 +215,15 @@ export class WeeklyMenuPlannerComponent implements OnInit {
   }
 
   getSlot(day: Day, mealType: MealType): MealSlot | undefined {
-    return this.currentMenu.slots.find(s => s.day === day && s.mealType === mealType);
+    const menu = this.currentMenu;
+    if (!menu) return undefined;
+    return menu.slots.find(s => s.day === day && s.mealType === mealType);
   }
 
   getDayCalories(day: Day): number {
-    return this.currentMenu.slots
+    const menu = this.currentMenu;
+    if (!menu) return 0;
+    return menu.slots
       .filter(s => s.day === day)
       .reduce((sum, s) => sum + (s.recipeCalories || 0), 0);
   }
