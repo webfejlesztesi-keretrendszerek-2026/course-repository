@@ -1,24 +1,40 @@
-{
-  "id": "list_demo_1",
-  "userId": "user_demo",
-  "weeklyMenuId": "menu_demo_1",
-  "items": [
-    { "id": "item_1", "ingredientId": "ing_014", "ingredientName": "burgonya", "totalAmount": 800, "unit": "g", "categoryId": "cat_ing_zoldseg", "categoryName": "Zöldség & Gyümölcs", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_5"] },
-    { "id": "item_2", "ingredientId": "ing_013", "ingredientName": "marhahús", "totalAmount": 500, "unit": "g", "categoryId": "cat_ing_meat", "categoryName": "Hús & Hal", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_5"] },
-    { "id": "item_3", "ingredientId": "ing_001", "ingredientName": "zöldborsó", "totalAmount": 300, "unit": "g", "categoryId": "cat_ing_zoldseg", "categoryName": "Zöldség & Gyümölcs", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_1"] },
-    { "id": "item_4", "ingredientId": "ing_004", "ingredientName": "csirkemell", "totalAmount": 600, "unit": "g", "categoryId": "cat_ing_meat", "categoryName": "Hús & Hal", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_2"] },
-    { "id": "item_5", "ingredientId": "ing_034", "ingredientName": "száraz tészta", "totalAmount": 800, "unit": "g", "categoryId": "cat_ing_dry", "categoryName": "Szárazáru & Konzerv", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_8","recipe_10"] },
-    { "id": "item_6", "ingredientId": "ing_031", "ingredientName": "lazac", "totalAmount": 300, "unit": "szelet", "categoryId": "cat_ing_meat", "categoryName": "Hús & Hal", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_10"] },
-    { "id": "item_7", "ingredientId": "ing_032", "ingredientName": "paradicsompüré", "totalAmount": 500, "unit": "g", "categoryId": "cat_ing_dry", "categoryName": "Szárazáru & Konzerv", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_8","recipe_12"] },
-    { "id": "item_8", "ingredientId": "ing_019", "ingredientName": "kenyér", "totalAmount": 2, "unit": "db", "categoryId": "cat_ing_bakery", "categoryName": "Pékáru", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_7"] },
-    { "id": "item_9", "ingredientId": "ing_021", "ingredientName": "paradicsom", "totalAmount": 6, "unit": "db", "categoryId": "cat_ing_zoldseg", "categoryName": "Zöldség & Gyümölcs", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_6","recipe_13"] },
-    { "id": "item_10", "ingredientId": "ing_010", "ingredientName": "rizs", "totalAmount": 700, "unit": "g", "categoryId": "cat_ing_dry", "categoryName": "Szárazáru & Konzerv", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_4","recipe_15"] },
-    { "id": "item_11", "ingredientId": "ing_035", "ingredientName": "tejföl", "totalAmount": 300, "unit": "g", "categoryId": "cat_ing_dairy", "categoryName": "Tejtermékek", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_11"] },
-    { "id": "item_12", "ingredientId": "ing_008", "ingredientName": "cukor", "totalAmount": 200, "unit": "g", "categoryId": "cat_ing_dry", "categoryName": "Szárazáru & Konzerv", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_3","recipe_13"] },
-    { "id": "item_13", "ingredientId": "ing_016", "ingredientName": "tojás", "totalAmount": 6, "unit": "db", "categoryId": "cat_ing_dairy", "categoryName": "Tejtermékek", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_13"] },
-    { "id": "item_14", "ingredientId": "ing_024", "ingredientName": "olívaolaj", "totalAmount": 200, "unit": "ml", "categoryId": "cat_ing_dry", "categoryName": "Szárazáru & Konzerv", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_6","recipe_8"] },
-    { "id": "item_15", "ingredientId": "ing_025", "ingredientName": "fokhagyma", "totalAmount": 50, "unit": "g", "categoryId": "cat_ing_spices", "categoryName": "Fűszerek", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_8","recipe_12"] }
-  ],
-  "generatedAt": "2026-03-31T00:00:00.000Z",
-  "updatedAt": "2026-03-31T00:00:00.000Z"
-}
+[
+  {
+    "id": "list_2026_03_29",
+    "weekOf": "2026-03-29",
+    "userId": "user_demo",
+    "weeklyMenuId": "menu_2026_03_29",
+    "items": [
+      { "id": "item_1", "ingredientId": "ing_014", "ingredientName": "burgonya", "totalAmount": 800, "unit": "g", "categoryId": "cat_ing_zoldseg", "categoryName": "Zöldség & Gyümölcs", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_5"] },
+      { "id": "item_2", "ingredientId": "ing_013", "ingredientName": "marhahús", "totalAmount": 500, "unit": "g", "categoryId": "cat_ing_meat", "categoryName": "Hús & Hal", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_5"] },
+      { "id": "item_3", "ingredientId": "ing_001", "ingredientName": "zöldborsó", "totalAmount": 300, "unit": "g", "categoryId": "cat_ing_zoldseg", "categoryName": "Zöldség & Gyümölcs", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_1"] }
+    ],
+    "generatedAt": "2026-03-29T08:00:00.000Z",
+    "updatedAt": "2026-03-29T08:00:00.000Z"
+  },
+  {
+    "id": "list_2026_04_05",
+    "weekOf": "2026-04-05",
+    "userId": "user_demo",
+    "weeklyMenuId": "menu_2026_04_05",
+    "items": [
+      { "id": "item_21", "ingredientId": "ing_021", "ingredientName": "paradicsom", "totalAmount": 6, "unit": "db", "categoryId": "cat_ing_zoldseg", "categoryName": "Zöldség & Gyümölcs", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_6","recipe_13"] },
+      { "id": "item_22", "ingredientId": "ing_004", "ingredientName": "csirkemell", "totalAmount": 600, "unit": "g", "categoryId": "cat_ing_meat", "categoryName": "Hús & Hal", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_2"] },
+      { "id": "item_23", "ingredientId": "ing_019", "ingredientName": "kenyér", "totalAmount": 2, "unit": "db", "categoryId": "cat_ing_bakery", "categoryName": "Pékáru", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_7"] }
+    ],
+    "generatedAt": "2026-04-05T08:00:00.000Z",
+    "updatedAt": "2026-04-05T08:00:00.000Z"
+  },
+  {
+    "id": "list_2026_04_12",
+    "weekOf": "2026-04-12",
+    "userId": "user_demo",
+    "weeklyMenuId": "menu_2026_04_12",
+    "items": [
+      { "id": "item_31", "ingredientId": "ing_035", "ingredientName": "tejföl", "totalAmount": 300, "unit": "g", "categoryId": "cat_ing_dairy", "categoryName": "Tejtermékek", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_11"] },
+      { "id": "item_32", "ingredientId": "ing_032", "ingredientName": "paradicsompüré", "totalAmount": 500, "unit": "g", "categoryId": "cat_ing_dry", "categoryName": "Szárazáru & Konzerv", "checked": false, "isManual": false, "fromRecipeIds": ["recipe_8","recipe_12"] }
+    ],
+    "generatedAt": "2026-04-12T08:00:00.000Z",
+    "updatedAt": "2026-04-12T08:00:00.000Z"
+  }
+]

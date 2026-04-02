@@ -11,6 +11,11 @@
 	--color-muted: #5c4632; /* Sötétebb, jobb kontraszt a világos háttérrel (WCAG AA) */
 	--color-border: #e0d6c9;
 
+	/* Kontraszt szövegszínek a különböző háttérszínekhez */
+	--color-on-primary: #fff;
+	--color-on-secondary: #3a2c1a;
+	--color-on-error: #fff;
+
 	--font-family-base: 'Nunito', 'Segoe UI', Arial, sans-serif;
 		--color-text: #3a2c1a; /* Sötétebb, még jobb kontraszt általános szövegekhez */
 	/* Font méretek (fluid clamp) */
@@ -89,6 +94,76 @@
 	outline: 2px solid var(--color-primary);
 }
 
+/* Global dialog styles used by recipe-editor and recipe-picker (applied via panelClass/backdropClass) */
+.dialog-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0,0,0,0.3);
+	z-index: 1000;
+}
+.dialog {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: var(--color-surface);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-lg);
+	padding: var(--space-lg);
+	z-index: 1001;
+	min-width: 320px;
+	max-width: 90vw;
+	max-height: 85vh;
+	overflow: hidden;
+}
+.dialog-close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	background: var(--color-error);
+	color: #fff;
+	border: none;
+	border-radius: var(--radius-round);
+	font-size: 2rem;
+	width: 36px;
+	height: 36px;
+	cursor: pointer;
+	box-shadow: var(--shadow-xs);
+}
+
+/* Center material overlay pane when using panelClass 'app-dialog-panel' */
+.app-dialog-panel {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	padding: 0 !important;
+}
+
+/* When dialog content uses .dialog class inside the overlay, make it position:relative so it centers correctly */
+.app-dialog-panel .dialog {
+	position: relative;
+	top: auto;
+	left: auto;
+	transform: none;
+	margin: 0;
+}
+
+/* Prevent horizontal scrolling inside dialog overlays and ensure dialogs fit viewport */
+.app-dialog-panel {
+	box-sizing: border-box;
+	padding: 12px !important;
+	overflow-x: hidden !important;
+}
+.app-dialog-panel .dialog {
+	width: min(640px, 95vw) !important;
+	max-width: 95vw !important;
+	box-sizing: border-box !important;
+	overflow-x: hidden !important;
+}
+
 /* Billentyűzetes fókusz kiemelés */
 :focus-visible {
 	outline: 2px solid var(--color-primary);
@@ -114,6 +189,11 @@
 		--color-text: #f8f5f2;
 		--color-muted: #a89b8c;
 		--color-border: #4a3c2a;
+
+		/* Kontraszt színek sötét témához (világos gomb háttérekhez sötét szöveg) */
+		--color-on-primary: #2a2320;
+		--color-on-secondary: #2a2320;
+		--color-on-error: #2a2320;
 		--shadow-xs: 0 1px 2px rgba(248, 245, 242, 0.05);
 		--shadow-sm: 0 2px 4px rgba(248, 245, 242, 0.08);
 		--shadow-md: 0 4px 8px rgba(248, 245, 242, 0.12);

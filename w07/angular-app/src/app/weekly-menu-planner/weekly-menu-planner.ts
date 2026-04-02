@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MenuCalendar } from './menu-calendar/menu-calendar';
 import { MiniRecipeCard } from './mini-recipe-card/mini-recipe-card';
+import { RecipePicker } from './recipe-picker/recipe-picker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
 import { MAT_DATEPICKER_SCROLL_STRATEGY, MatDatepickerIntl } from '@angular/material/datepicker';
@@ -35,6 +36,7 @@ export { WeeklyMenuPlannerComponent as WeeklyMenuPlanner };
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
+    RecipePicker,
     MatDialogModule,
     OverlayModule
   ],
@@ -116,6 +118,7 @@ export class WeeklyMenuPlannerComponent implements OnInit {
 
   currentDialogRef?: MatDialogRef<any>;
 
+
   constructor(public dialog: MatDialog, private cdRef: ChangeDetectorRef, private dateAdapter: DateAdapter<Date>, public weeklyMenuService: WeeklyMenuService) {}
 
   ngOnInit(): void {
@@ -124,8 +127,31 @@ export class WeeklyMenuPlannerComponent implements OnInit {
       registerLocaleData(localeHu);
     } catch {}
     try { this.dateAdapter.setLocale('hu'); } catch {}
-    // Load weekly menu from service
-    try { this.weeklyMenuService.loadWeeklyMenu(); } catch {}
+    // Load weekly menu for the currently selected week
+    try { this.weeklyMenuService.loadForWeek(this.selectedDate); } catch {}
+  }
+
+  onEditMeal(event: {day: number, meal: number}) {
+    const dayIdx = event.day;
+    const mealIdx = event.meal;
+    const dayKey = this.dayKeys[dayIdx];
+    const mealType = this.mealTypes[mealIdx];
+    const dialogRef = this.dialog.open(RecipePicker, { width: '640px', panelClass: 'app-dialog-panel', backdropClass: 'dialog-backdrop' });
+    dialogRef.afterClosed().subscribe((recipe: any) => {
+      if (recipe) {
+        this.weeklyMenuService.updateSlot(dayKey, mealType, recipe);
+        try { this.cdRef.detectChanges(); } catch {}
+      }
+    });
+  }
+
+  onDeleteMeal(event: {day: number, meal: number}) {
+    const dayIdx = event.day;
+    const mealIdx = event.meal;
+    const dayKey = this.dayKeys[dayIdx];
+    const mealType = this.mealTypes[mealIdx];
+    this.weeklyMenuService.removeSlot(dayKey, mealType);
+    try { this.cdRef.detectChanges(); } catch {}
   }
 
   openDatePicker(): void {
@@ -158,6 +184,7 @@ export class WeeklyMenuPlannerComponent implements OnInit {
     date.setDate(date.getDate() - 7);
     this.selectedDate = date;
     this.updateWeekLabel(date);
+    try { this.weeklyMenuService.loadForWeek(this.selectedDate); } catch {}
   }
 
   nextWeek(): void {
@@ -166,6 +193,7 @@ export class WeeklyMenuPlannerComponent implements OnInit {
     date.setDate(date.getDate() + 7);
     this.selectedDate = date;
     this.updateWeekLabel(date);
+    try { this.weeklyMenuService.loadForWeek(this.selectedDate); } catch {}
   }
 
   
@@ -185,6 +213,7 @@ export class WeeklyMenuPlannerComponent implements OnInit {
     monday.setDate(date.getDate() - ((day + 6) % 7));
     this.selectedDate = monday;
     this.updateWeekLabel(monday);
+    try { this.weeklyMenuService.loadForWeek(this.selectedDate); } catch {}
     // ensure UI updates immediately
     try { this.cdRef.detectChanges(); } catch { /* ignore if not allowed */ }
   }
@@ -207,12 +236,7 @@ export class WeeklyMenuPlannerComponent implements OnInit {
     // TODO: implementálható
   }
 
-  onEditMeal(event: {day: number, meal: number}) {
-    // TODO: implementálható
-  }
-  onDeleteMeal(event: {day: number, meal: number}) {
-    // TODO: implementálható
-  }
+  
 
   getSlot(day: Day, mealType: MealType): MealSlot | undefined {
     const menu = this.currentMenu;

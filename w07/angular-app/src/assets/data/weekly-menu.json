@@ -1,21 +1,49 @@
-{
-  "id": "menu_demo_1",
-  "weekStart": "2026-03-30",
-  "ownerId": "user_demo",
-  "slots": [
-    { "id": "slot_1", "day": "2026-03-30", "mealType": "ebéd", "recipeId": "recipe_5", "recipeTitle": "Gulyásleves", "recipeImageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" },
-    { "id": "slot_2", "day": "2026-03-30", "mealType": "vacsora", "recipeId": "recipe_2", "recipeTitle": "Sült csirkemell zöldségekkel", "recipeImageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" },
-    { "id": "slot_3", "day": "2026-03-31", "mealType": "ebéd", "recipeId": "recipe_1", "recipeTitle": "Tavaszi zöldborsóleves", "recipeImageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" },
-    { "id": "slot_4", "day": "2026-03-31", "mealType": "vacsora", "recipeId": "recipe_4", "recipeTitle": "Zöldséges rizottó", "recipeImageUrl": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=800&q=80" },
-    { "id": "slot_5", "day": "2026-04-01", "mealType": "ebéd", "recipeId": "recipe_6", "recipeTitle": "Caprese saláta", "recipeImageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
-    { "id": "slot_6", "day": "2026-04-01", "mealType": "vacsora", "recipeId": "recipe_8", "recipeTitle": "Penne arrabbiata", "recipeImageUrl": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" },
-    { "id": "slot_7", "day": "2026-04-02", "mealType": "ebéd", "recipeId": "recipe_11", "recipeTitle": "Rakott krumpli", "recipeImageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" },
-    { "id": "slot_8", "day": "2026-04-02", "mealType": "vacsora", "recipeId": "recipe_9", "recipeTitle": "Tonhalas saláta", "recipeImageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
-    { "id": "slot_9", "day": "2026-04-03", "mealType": "ebéd", "recipeId": "recipe_10", "recipeTitle": "Lazacos tészta citrommal", "recipeImageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" },
-    { "id": "slot_10", "day": "2026-04-03", "mealType": "vacsora", "recipeId": "recipe_12", "recipeTitle": "Házi pizzatészta", "recipeImageUrl": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" },
-    { "id": "slot_11", "day": "2026-04-04", "mealType": "ebéd", "recipeId": "recipe_14", "recipeTitle": "Csicseriborsó curry", "recipeImageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" },
-    { "id": "slot_12", "day": "2026-04-04", "mealType": "vacsora", "recipeId": "recipe_7", "recipeTitle": "Avokádós pirítós", "recipeImageUrl": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=800&q=80" }
-  ],
-  "createdAt": "2026-03-31T00:00:00.000Z",
-  "updatedAt": "2026-03-31T00:00:00.000Z"
-}
+[
+  {
+    "id": "menu_prev_1",
+    "weekStart": "2026-03-23",
+    "ownerId": "user_demo",
+    "slots": [
+      { "id": "p_slot_1", "day": "2026-03-23", "mealType": "ebéd", "recipeId": "recipe_3", "recipeTitle": "Borsófőzelék", "recipeImageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" },
+      { "id": "p_slot_2", "day": "2026-03-23", "mealType": "vacsora", "recipeId": "recipe_2", "recipeTitle": "Sült csirkemell zöldségekkel", "recipeImageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" },
+      { "id": "p_slot_3", "day": "2026-03-24", "mealType": "ebéd", "recipeId": "recipe_5", "recipeTitle": "Gulyásleves", "recipeImageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" },
+      { "id": "p_slot_4", "day": "2026-03-25", "mealType": "vacsora", "recipeId": "recipe_4", "recipeTitle": "Zöldséges rizottó", "recipeImageUrl": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=800&q=80" }
+    ],
+    "createdAt": "2026-03-23T00:00:00.000Z",
+    "updatedAt": "2026-03-23T00:00:00.000Z"
+  },
+  {
+    "id": "menu_demo_1",
+    "weekStart": "2026-03-30",
+    "ownerId": "user_demo",
+    "slots": [
+      { "id": "slot_1", "day": "2026-03-30", "mealType": "ebéd", "recipeId": "recipe_5", "recipeTitle": "Gulyásleves", "recipeImageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" },
+      { "id": "slot_2", "day": "2026-03-30", "mealType": "vacsora", "recipeId": "recipe_2", "recipeTitle": "Sült csirkemell zöldségekkel", "recipeImageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" },
+      { "id": "slot_3", "day": "2026-03-31", "mealType": "ebéd", "recipeId": "recipe_1", "recipeTitle": "Tavaszi zöldborsóleves", "recipeImageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" },
+      { "id": "slot_4", "day": "2026-03-31", "mealType": "vacsora", "recipeId": "recipe_4", "recipeTitle": "Zöldséges rizottó", "recipeImageUrl": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=800&q=80" },
+      { "id": "slot_5", "day": "2026-04-01", "mealType": "ebéd", "recipeId": "recipe_6", "recipeTitle": "Caprese saláta", "recipeImageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
+      { "id": "slot_6", "day": "2026-04-01", "mealType": "vacsora", "recipeId": "recipe_8", "recipeTitle": "Penne arrabbiata", "recipeImageUrl": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" },
+      { "id": "slot_7", "day": "2026-04-02", "mealType": "ebéd", "recipeId": "recipe_11", "recipeTitle": "Rakott krumpli", "recipeImageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" },
+      { "id": "slot_8", "day": "2026-04-02", "mealType": "vacsora", "recipeId": "recipe_9", "recipeTitle": "Tonhalas saláta", "recipeImageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
+      { "id": "slot_9", "day": "2026-04-03", "mealType": "ebéd", "recipeId": "recipe_10", "recipeTitle": "Lazacos tészta citrommal", "recipeImageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" },
+      { "id": "slot_10", "day": "2026-04-03", "mealType": "vacsora", "recipeId": "recipe_12", "recipeTitle": "Házi pizzatészta", "recipeImageUrl": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" },
+      { "id": "slot_11", "day": "2026-04-04", "mealType": "ebéd", "recipeId": "recipe_14", "recipeTitle": "Csicseriborsó curry", "recipeImageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" },
+      { "id": "slot_12", "day": "2026-04-04", "mealType": "vacsora", "recipeId": "recipe_7", "recipeTitle": "Avokádós pirítós", "recipeImageUrl": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=800&q=80" }
+    ],
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "menu_next_1",
+    "weekStart": "2026-04-06",
+    "ownerId": "user_demo",
+    "slots": [
+      { "id": "n_slot_1", "day": "2026-04-06", "mealType": "ebéd", "recipeId": "recipe_2", "recipeTitle": "Sült csirkemell zöldségekkel", "recipeImageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" },
+      { "id": "n_slot_2", "day": "2026-04-06", "mealType": "vacsora", "recipeId": "recipe_3", "recipeTitle": "Borsófőzelék", "recipeImageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" },
+      { "id": "n_slot_3", "day": "2026-04-07", "mealType": "ebéd", "recipeId": "recipe_13", "recipeTitle": "Zöldséges tál", "recipeImageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80" },
+      { "id": "n_slot_4", "day": "2026-04-07", "mealType": "vacsora", "recipeId": "recipe_15", "recipeTitle": "Paradicsomos csirke", "recipeImageUrl": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80" }
+    ],
+    "createdAt": "2026-04-06T00:00:00.000Z",
+    "updatedAt": "2026-04-06T00:00:00.000Z"
+  }
+]

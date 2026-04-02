@@ -18,6 +18,7 @@ export interface ShoppingItem {
 
 export interface ShoppingList {
   id: string;
+  weekOf?: string; // ISO date identifying the week (e.g., 2026-03-29)
   userId: string;
   weeklyMenuId?: string;
   items: ShoppingItem[];

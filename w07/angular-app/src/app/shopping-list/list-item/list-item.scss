@@ -47,7 +47,7 @@
 }
 .item-delete {
 	background: var(--color-error);
-	color: #fff;
+	color: var(--color-on-error);
 	border: none;
 	border-radius: var(--radius-sm);
 	padding: var(--space-xxs) var(--space-xs);

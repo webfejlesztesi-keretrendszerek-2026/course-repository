@@ -1,4 +1,5 @@
 import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { ShoppingList, ShoppingItem } from '../models/shopping-list';
 import { Unit, PURCHASABLE_UNITS } from '../models/units';
 
@@ -52,34 +53,34 @@ export class ShoppingService {
     return result;
   });
 
-  constructor() {
-    // initialize demo shopping list (flattened from previous sections)
-    const now = new Date().toISOString();
-    const demoItems: ShoppingItem[] = [
-      { id: 'item_1', ingredientName: 'Paradicsom', totalAmount: 4, unit: Unit.Piece, checked: false, isManual: false, fromRecipeIds: [], categoryId: 'veg', categoryName: '🥬 Zöldség & Gyümölcs' },
-      { id: 'item_2', ingredientName: 'Uborka', totalAmount: 2, unit: Unit.Piece, checked: true, isManual: false, fromRecipeIds: [], categoryId: 'veg', categoryName: '🥬 Zöldség & Gyümölcs' },
-      { id: 'item_3', ingredientName: 'Paprika', totalAmount: 3, unit: Unit.Piece, checked: false, isManual: false, fromRecipeIds: [], categoryId: 'veg', categoryName: '🥬 Zöldség & Gyümölcs' },
-      { id: 'item_4', ingredientName: 'Csirkemell', totalAmount: 500, unit: Unit.Gram, checked: false, isManual: false, fromRecipeIds: [], categoryId: 'meat', categoryName: '🥩 Hús & Hal' },
-      { id: 'item_5', ingredientName: 'Lazac', totalAmount: 2, unit: Unit.Slice, checked: true, isManual: false, fromRecipeIds: [], categoryId: 'meat', categoryName: '🥩 Hús & Hal' },
-      { id: 'item_6', ingredientName: 'Tej', totalAmount: 2, unit: Unit.Liter, checked: false, isManual: false, fromRecipeIds: [], categoryId: 'dairy', categoryName: '🥛 Tejtermékek' },
-      { id: 'item_7', ingredientName: 'Sajt', totalAmount: 200, unit: Unit.Gram, checked: false, isManual: false, fromRecipeIds: [], categoryId: 'dairy', categoryName: '🥛 Tejtermékek' },
-      { id: 'item_8', ingredientName: 'Joghurt', totalAmount: 4, unit: Unit.Piece, checked: true, isManual: false, fromRecipeIds: [], categoryId: 'dairy', categoryName: '🥛 Tejtermékek' },
-      { id: 'item_9', ingredientName: 'Tojás', totalAmount: 10, unit: Unit.Piece, checked: false, isManual: false, fromRecipeIds: [], categoryId: 'other', categoryName: '🧴 Egyéb' },
-      { id: 'item_10', ingredientName: 'Kávé', totalAmount: 250, unit: Unit.Gram, checked: false, isManual: false, fromRecipeIds: [], categoryId: 'other', categoryName: '🧴 Egyéb' },
-      { id: 'item_11', ingredientName: 'Papírtörlő', totalAmount: 2, unit: Unit.Piece, checked: true, isManual: false, fromRecipeIds: [], categoryId: 'other', categoryName: '🧴 Egyéb' },
-    ];
+  constructor(private http: HttpClient) {
+    this.loadFromAssets();
+  }
 
-    const demoList: ShoppingList = {
-      id: 'list_demo_1',
-      userId: 'user_demo',
-      weeklyMenuId: 'menu_demo_1',
-      items: demoItems,
-      generatedAt: now,
-      updatedAt: now,
-    };
+  private loadFromAssets(): void {
+    this.http.get<ShoppingList | ShoppingList[]>('assets/data/shopping-list.json').subscribe({
+      next: (res) => {
+        let list: ShoppingList | null = null;
+        if (Array.isArray(res)) {
+          // pick latest by `weekOf` if present, otherwise by `generatedAt`
+          list = res.slice().sort((a, b) => {
+            const aKey = (a.weekOf ?? a.generatedAt) || '';
+            const bKey = (b.weekOf ?? b.generatedAt) || '';
+            return aKey < bKey ? 1 : aKey > bKey ? -1 : 0;
+          })[0] ?? null;
+        } else {
+          list = res;
+        }
 
-    this._currentList.set(demoList);
-    this.filterNonPurchasable();
+        if (list) {
+          this._currentList.set(list);
+          this.filterNonPurchasable();
+        }
+      },
+      error: (err) => {
+        console.error('Failed to load shopping list from assets:', err);
+      }
+    });
   }
 
   filterNonPurchasable() {
