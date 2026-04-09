@@ -1,6 +1,8 @@
 
 import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { Recipe } from '../models/index';
+import { collection, getDocs, query, orderBy, onSnapshot, Unsubscribe, QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
+import { db } from '../firebase.config';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService {
@@ -81,17 +83,48 @@ export class RecipeService {
     this._loading.set(true);
     this._error.set(null);
     try {
-      const response = await fetch('/assets/data/recipes.json');
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const recipes: Recipe[] = await response.json();
+      const q = query(collection(db, 'recipes'), orderBy('createdAt', 'desc'));
+      const snapshot = await getDocs(q);
+      const recipes = snapshot.docs.map((doc: QueryDocumentSnapshot<DocumentData>) => ({
+        ...doc.data(),
+        id: doc.id
+      }) as Recipe);
       this._recipes.set(recipes);
     } catch (err) {
-      this._error.set('Nem sikerült betölteni a recepteket. Próbáld újra később.');
-      console.error('RecipeService.loadRecipes error:', err);
+      this._error.set('Nem sikerült betölteni a recepteket. Ellenőrizd az internetkapcsolatot.');
+      console.error('Firestore hiba:', err);
     } finally {
       this._loading.set(false);
     }
   }
+
+  /*
+  // Real-time listener reference (példa / kikommentezve)
+  private unsubscribe?: Unsubscribe;
+
+  loadRecipesRealtime(): void {
+    this._loading.set(true);
+    const q = query(collection(db, 'recipes'), orderBy('createdAt', 'desc'));
+    this.unsubscribe = onSnapshot(q,
+      (snapshot) => {
+        const recipes = snapshot.docs.map(doc => ({
+          ...doc.data(), id: doc.id
+        }) as Recipe);
+        this._recipes.set(recipes);
+        this._loading.set(false);
+      },
+      (error) => {
+        this._error.set('Valós idejű kapcsolat megszakadt.');
+        this._loading.set(false);
+      }
+    );
+  }
+
+  // Komponens elhagyásakor hívandó:
+  stopRealtimeListener(): void {
+    this.unsubscribe?.();
+  }
+  */
 
   addRecipe(recipe: Recipe) {
     this._recipes.update(list => [...list, recipe]);

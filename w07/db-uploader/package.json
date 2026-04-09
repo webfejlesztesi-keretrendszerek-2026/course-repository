@@ -1,0 +1,14 @@
+{
+  "name": "db-uploader",
+  "version": "1.0.0",
+  "description": "Upload JSON assets to Firestore collections",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "firebase-admin": "^11.10.0"
+  }
+}

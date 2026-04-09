@@ -1,4 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, importProvidersFrom } from '@angular/core';
+import './firebase.config';
 import { provideRouter } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
