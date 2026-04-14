@@ -1,0 +1,15 @@
+<div class="toast-root" aria-live="polite">
+  <div class="toast-portal">
+    <div class="toast" [class.visible]="toast()?.visible" [class.success]="toast()?.type === 'success'" [class.error]="toast()?.type === 'error'" [class.warning]="toast()?.type === 'warning'">
+      <div class="icon" aria-hidden="true">
+        <ng-container [ngSwitch]="toast()?.type">
+          <span *ngSwitchCase="'success'">✓</span>
+          <span *ngSwitchCase="'error'">✕</span>
+          <span *ngSwitchCase="'warning'">⚠</span>
+        </ng-container>
+      </div>
+      <div class="message">{{ toast()?.message }}</div>
+      <button class="close" (click)="close()" aria-label="Bezárás">×</button>
+    </div>
+  </div>
+</div>

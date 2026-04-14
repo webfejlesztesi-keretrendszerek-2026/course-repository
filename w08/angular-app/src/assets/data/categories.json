@@ -1,0 +1,15 @@
+[
+  { "id": "cat_leves", "name": "Leves", "type": "recipe", "icon": "🍲", "sortOrder": 1, "createdBy": null },
+  { "id": "cat_foetel", "name": "Főétel", "type": "recipe", "icon": "🍽️", "sortOrder": 2, "createdBy": null },
+  { "id": "cat_desszert", "name": "Desszert", "type": "recipe", "icon": "🍰", "sortOrder": 3, "createdBy": null },
+  { "id": "cat_salata", "name": "Saláta", "type": "recipe", "icon": "🥗", "sortOrder": 4, "createdBy": null },
+  { "id": "cat_reggeli", "name": "Reggeli", "type": "recipe", "icon": "☕", "sortOrder": 5, "createdBy": null },
+  { "id": "cat_teszta", "name": "Tészta", "type": "recipe", "icon": "🍝", "sortOrder": 6, "createdBy": null },
+
+  { "id": "cat_ing_zoldseg", "name": "Zöldség & Gyümölcs", "type": "ingredient", "icon": "🥬", "sortOrder": 10, "createdBy": null },
+  { "id": "cat_ing_meat", "name": "Hús & Hal", "type": "ingredient", "icon": "🥩", "sortOrder": 11, "createdBy": null },
+  { "id": "cat_ing_dairy", "name": "Tejtermékek", "type": "ingredient", "icon": "🥛", "sortOrder": 12, "createdBy": null },
+  { "id": "cat_ing_bakery", "name": "Pékáru", "type": "ingredient", "icon": "🥐", "sortOrder": 13, "createdBy": null },
+  { "id": "cat_ing_dry", "name": "Szárazáru & Konzerv", "type": "ingredient", "icon": "🥫", "sortOrder": 14, "createdBy": null },
+  { "id": "cat_ing_spices", "name": "Fűszerek", "type": "ingredient", "icon": "🧂", "sortOrder": 15, "createdBy": null }
+]

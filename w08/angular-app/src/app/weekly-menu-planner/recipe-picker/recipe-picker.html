@@ -1,0 +1,20 @@
+<section class="recipe-picker">
+  <header class="picker-header">
+    <h2>Válassz receptet</h2>
+    <button class="dialog-close" (click)="close()">×</button>
+  </header>
+  <div class="picker-search">
+    <input type="search" placeholder="Keresés..." [(ngModel)]="searchTerm" (ngModelChange)="setSearch($event)">
+  </div>
+  <ul class="picker-list">
+    <li *ngFor="let r of displayed()" class="picker-item">
+      <button class="picker-btn" (click)="select(r)">
+        <img *ngIf="r.imageUrl || r.image" [src]="r.imageUrl || r.image" alt="" class="thumb">
+        <div class="info">
+          <div class="title">{{ r.title }}</div>
+          <div class="meta">{{ r.prepTime }} perc • {{ r.calories }} kcal</div>
+        </div>
+      </button>
+    </li>
+  </ul>
+</section>
