@@ -1,0 +1,408 @@
+[
+  {
+    "id": "recipe_1",
+    "title": "Tavaszi zöldborsóleves",
+    "description": "Friss zöldborsóval, répával és petrezselyemmel.",
+    "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_leves",
+    "difficulty": "könnyű",
+    "prepTime": 30,
+    "calories": 320,
+    "servings": 4,
+    "diet": ["vegetáriánus"],
+    "nutrition": { "protein": 10, "carbs": 30, "fat": 8 },
+    "ingredients": [
+      { "ingredientId": "ing_001", "ingredientName": "zöldborsó", "amount": 300, "unit": "g" },
+      { "ingredientId": "ing_002", "ingredientName": "répa", "amount": 100, "unit": "g" },
+      { "ingredientId": "ing_003", "ingredientName": "petrezselyem", "amount": 10, "unit": "g" }
+    ],
+    "steps": [
+      "Héjatlan zöldborsót tisztítsd meg.",
+      "Pirítsd meg a répát, add hozzá a zöldborsót és vizet.",
+      "Főzd puhára, fűszerezd, és tálalás előtt szórd meg petrezselyemmel."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_2",
+    "title": "Sült csirkemell zöldségekkel",
+    "description": "Szaftos csirkemell, sült zöldségekkel tálalva.",
+    "imageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_foetel",
+    "difficulty": "közepes",
+    "prepTime": 45,
+    "calories": 410,
+    "servings": 4,
+    "diet": [],
+    "nutrition": { "protein": 35, "carbs": 20, "fat": 18 },
+    "ingredients": [
+      { "ingredientId": "ing_004", "ingredientName": "csirkemell", "amount": 600, "unit": "g" },
+      { "ingredientId": "ing_005", "ingredientName": "cukorborsó", "amount": 150, "unit": "g" },
+      { "ingredientId": "ing_006", "ingredientName": "sárgarépa", "amount": 100, "unit": "g" }
+    ],
+    "steps": [
+      "Fűszerezd a csirkemellet és süsd meg serpenyőben.",
+      "Süsd meg a zöldségeket sütőben olívaolajjal.",
+      "Tálald a csirkét a sült zöldségekkel."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_3",
+    "title": "Csokis muffin",
+    "description": "Puha, csokis muffin recept, tökéletes uzsonnára.",
+    "imageUrl": "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_desszert",
+    "difficulty": "könnyű",
+    "prepTime": 25,
+    "calories": 280,
+    "servings": 12,
+    "diet": [],
+    "nutrition": { "protein": 5, "carbs": 40, "fat": 12 },
+    "ingredients": [
+      { "ingredientId": "ing_007", "ingredientName": "liszt", "amount": 200, "unit": "g" },
+      { "ingredientId": "ing_008", "ingredientName": "cukor", "amount": 150, "unit": "g" },
+      { "ingredientId": "ing_009", "ingredientName": "csokoládé", "amount": 100, "unit": "g" }
+    ],
+    "steps": [
+      "Keverd össze a száraz hozzávalókat.",
+      "Add hozzá a nedves hozzávalókat, majd süsd muffinformában 20 percig.",
+      "Hűtsd ki és tálald."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_4",
+    "title": "Zöldséges rizottó",
+    "description": "Krémes rizottó sok zöldséggel, vegetáriánusoknak.",
+    "imageUrl": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_foetel",
+    "difficulty": "közepes",
+    "prepTime": 40,
+    "calories": 350,
+    "servings": 4,
+    "diet": ["vegetáriánus"],
+    "nutrition": { "protein": 8, "carbs": 55, "fat": 10 },
+    "ingredients": [
+      { "ingredientId": "ing_010", "ingredientName": "rizs", "amount": 300, "unit": "g" },
+      { "ingredientId": "ing_011", "ingredientName": "cukkíni", "amount": 150, "unit": "g" },
+      { "ingredientId": "ing_012", "ingredientName": "parmezán", "amount": 50, "unit": "g" }
+    ],
+    "steps": [
+      "Pirítsd a rizst olívaolajon, majd fokozatosan adagold hozzá a levest.",
+      "Add hozzá a zöldségeket és főzd krémesre.",
+      "Tálaláskor szórd meg parmezánnal."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_5",
+    "title": "Gulyásleves",
+    "description": "Magyaros gulyásleves, tartalmas és ízletes.",
+    "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_leves",
+    "difficulty": "haladó",
+    "prepTime": 60,
+    "calories": 420,
+    "servings": 4,
+    "diet": [],
+    "nutrition": { "protein": 30, "carbs": 35, "fat": 20 },
+    "ingredients": [
+      { "ingredientId": "ing_013", "ingredientName": "marhahús", "amount": 500, "unit": "g" },
+      { "ingredientId": "ing_014", "ingredientName": "burgonya", "amount": 300, "unit": "g" },
+      { "ingredientId": "ing_015", "ingredientName": "sárgarépa", "amount": 100, "unit": "g" }
+    ],
+    "steps": [
+      "Pirítsd meg a húst és az alapanyagokat.",
+      "Főzd lassú tűzön amíg minden megpuhul.",
+      "Ízesítsd pirospaprikával és köménnyel."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+
+  {
+    "id": "recipe_6",
+    "title": "Caprese saláta",
+    "description": "Friss paradicsom, mozzarella és bazsalikom egyszerű öntettel.",
+    "imageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_salata",
+    "difficulty": "könnyű",
+    "prepTime": 10,
+    "calories": 220,
+    "servings": 2,
+    "diet": ["vegetáriánus"],
+    "nutrition": { "protein": 12, "carbs": 6, "fat": 16 },
+    "ingredients": [
+      { "ingredientId": "ing_021", "ingredientName": "paradicsom", "amount": 3, "unit": "db" },
+      { "ingredientId": "ing_018", "ingredientName": "sajt", "amount": 150, "unit": "g" },
+      { "ingredientId": "ing_029", "ingredientName": "bazsalikom", "amount": 5, "unit": "g" }
+    ],
+    "steps": [
+      "Szeleteld fel a paradicsomot és a sajtot.",
+      "Rendezd egymásra, szórd meg bazsalikommal és locsold meg olívaolajjal.",
+      "Tálald frissen."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_7",
+    "title": "Avokádós pirítós",
+    "description": "Egyszerű reggeli avokádóval és citrommal.",
+    "imageUrl": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_reggeli",
+    "difficulty": "könnyű",
+    "prepTime": 8,
+    "calories": 260,
+    "servings": 1,
+    "diet": ["vegetáriánus"],
+    "nutrition": { "protein": 6, "carbs": 28, "fat": 14 },
+    "ingredients": [
+      { "ingredientId": "ing_019", "ingredientName": "kenyér", "amount": 1, "unit": "db" },
+      { "ingredientId": "ing_037", "ingredientName": "citrom", "amount": 1, "unit": "db" },
+      { "ingredientId": "ing_024", "ingredientName": "olívaolaj", "amount": 10, "unit": "ml" }
+    ],
+    "steps": [
+      "Pirítsd meg a kenyeret.",
+      "Törd össze az avokádót, facsard rá a citromlevet és sózd.",
+      "Kend a pirítósra és locsold meg olívaolajjal."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_8",
+    "title": "Penne arrabbiata",
+    "description": "Csípős paradicsomos tészta fokhagymával és oregánóval.",
+    "imageUrl": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_teszta",
+    "difficulty": "közepes",
+    "prepTime": 25,
+    "calories": 480,
+    "servings": 4,
+    "diet": [],
+    "nutrition": { "protein": 12, "carbs": 75, "fat": 10 },
+    "ingredients": [
+      { "ingredientId": "ing_034", "ingredientName": "száraz tészta", "amount": 400, "unit": "g" },
+      { "ingredientId": "ing_032", "ingredientName": "paradicsompüré", "amount": 300, "unit": "g" },
+      { "ingredientId": "ing_025", "ingredientName": "fokhagyma", "amount": 4, "unit": "g" }
+    ],
+    "steps": [
+      "Főzd al dente a tésztát.",
+      "Készítsd el a paradicsomos szószt pirított fokhagymával és fűszerekkel.",
+      "Keverd össze a tésztával és tálald."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_9",
+    "title": "Tonhalas saláta",
+    "description": "Egyszerű saláta tonhallal, babbal és friss zöldségekkel.",
+    "imageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_salata",
+    "difficulty": "könnyű",
+    "prepTime": 15,
+    "calories": 360,
+    "servings": 2,
+    "diet": [],
+    "nutrition": { "protein": 24, "carbs": 20, "fat": 16 },
+    "ingredients": [
+      { "ingredientId": "ing_033", "ingredientName": "babkonzerv", "amount": 200, "unit": "g" },
+      { "ingredientId": "ing_022", "ingredientName": "uborka", "amount": 1, "unit": "db" },
+      { "ingredientId": "ing_030", "ingredientName": "sonka", "amount": 100, "unit": "g" }
+    ],
+    "steps": [
+      "Öblítsd le a konzerv babot.",
+      "Vágd fel a zöldségeket és a sonkát.",
+      "Keverd össze és locsold meg egy kis olívaolajjal."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_10",
+    "title": "Lazacos tészta citrommal",
+    "description": "Krémes tészta lazaccal és citromos ízzel.",
+    "imageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_teszta",
+    "difficulty": "közepes",
+    "prepTime": 30,
+    "calories": 520,
+    "servings": 4,
+    "diet": [],
+    "nutrition": { "protein": 28, "carbs": 60, "fat": 18 },
+    "ingredients": [
+      { "ingredientId": "ing_034", "ingredientName": "száraz tészta", "amount": 400, "unit": "g" },
+      { "ingredientId": "ing_031", "ingredientName": "lazac", "amount": 300, "unit": "szelet" },
+      { "ingredientId": "ing_037", "ingredientName": "citrom", "amount": 1, "unit": "db" }
+    ],
+    "steps": [
+      "Főzd meg a tésztát.",
+      "Süsd meg a lazacot, majd keverd össze a tésztával és a citromlével.",
+      "Tálald frissen reszelt parmezánnal."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_11",
+    "title": "Rakott krumpli",
+    "description": "Hagyományos rakott krumpli tejföllel és kolbásszal.",
+    "imageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_foetel",
+    "difficulty": "közepes",
+    "prepTime": 70,
+    "calories": 600,
+    "servings": 6,
+    "diet": [],
+    "nutrition": { "protein": 20, "carbs": 65, "fat": 30 },
+    "ingredients": [
+      { "ingredientId": "ing_014", "ingredientName": "burgonya", "amount": 800, "unit": "g" },
+      { "ingredientId": "ing_035", "ingredientName": "tejföl", "amount": 300, "unit": "g" },
+      { "ingredientId": "ing_030", "ingredientName": "sonka", "amount": 200, "unit": "g" }
+    ],
+    "steps": [
+      "Főzd meg a krumplit és szeleteld fel.",
+      "Rétegezd a krumplit, sonkát és tejfölt.",
+      "Süsd 40 percig 180°C-on."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_12",
+    "title": "Házi pizzatészta",
+    "description": "Könnyű, ropogós pizzatészta otthon elkészítve.",
+    "imageUrl": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_foetel",
+    "difficulty": "közepes",
+    "prepTime": 90,
+    "calories": 450,
+    "servings": 4,
+    "diet": [],
+    "nutrition": { "protein": 12, "carbs": 70, "fat": 10 },
+    "ingredients": [
+      { "ingredientId": "ing_007", "ingredientName": "liszt", "amount": 500, "unit": "g" },
+      { "ingredientId": "ing_032", "ingredientName": "paradicsompüré", "amount": 200, "unit": "g" },
+      { "ingredientId": "ing_025", "ingredientName": "fokhagyma", "amount": 5, "unit": "g" }
+    ],
+    "steps": [
+      "Készítsd el a tésztát és keleszd duplájára.",
+      "Nyújtsd ki, kend meg paradicsompürével és rakd rá a feltéteket.",
+      "Süsd forró sütőben 10-12 percig."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_13",
+    "title": "Epres túrógombóc",
+    "description": "Édes túrógombócok friss eperrel és vaníliasodóval.",
+    "imageUrl": "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_desszert",
+    "difficulty": "közepes",
+    "prepTime": 50,
+    "calories": 360,
+    "servings": 4,
+    "diet": [],
+    "nutrition": { "protein": 10, "carbs": 60, "fat": 8 },
+    "ingredients": [
+      { "ingredientId": "ing_016", "ingredientName": "tojás", "amount": 2, "unit": "db" },
+      { "ingredientId": "ing_007", "ingredientName": "liszt", "amount": 100, "unit": "g" },
+      { "ingredientId": "ing_018", "ingredientName": "sajt", "amount": 250, "unit": "g" }
+    ],
+    "steps": [
+      "Keverd össze a túrót, tojást és lisztet, formázz gombócokat.",
+      "Főzd őket pár percig forró vízben.",
+      "Tálald eperrel és vaníliasodóval."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_14",
+    "title": "Csicseriborsó curry",
+    "description": "Fűszeres, húsmentes curry csicseriborsóval és paradicsommal.",
+    "imageUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_foetel",
+    "difficulty": "közepes",
+    "prepTime": 35,
+    "calories": 420,
+    "servings": 4,
+    "diet": ["vegán"],
+    "nutrition": { "protein": 14, "carbs": 50, "fat": 12 },
+    "ingredients": [
+      { "ingredientId": "ing_033", "ingredientName": "babkonzerv", "amount": 400, "unit": "g" },
+      { "ingredientId": "ing_032", "ingredientName": "paradicsompüré", "amount": 200, "unit": "g" },
+      { "ingredientId": "ing_025", "ingredientName": "fokhagyma", "amount": 5, "unit": "g" }
+    ],
+    "steps": [
+      "Pirítsd meg a fűszereket olajon, add hozzá a paradicsompürét és a csicserit.",
+      "Főzd össze, míg sűrűsödik.",
+      "Tálald rizzsel."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  },
+  {
+    "id": "recipe_15",
+    "title": "Gyümölcsös zabkása",
+    "description": "Meleg reggeli zabpehely friss gyümölcsökkel.",
+    "imageUrl": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=800&q=80",
+    "categoryId": "cat_reggeli",
+    "difficulty": "könnyű",
+    "prepTime": 10,
+    "calories": 320,
+    "servings": 1,
+    "diet": ["vegán"],
+    "nutrition": { "protein": 8, "carbs": 50, "fat": 6 },
+    "ingredients": [
+      { "ingredientId": "ing_010", "ingredientName": "rizs", "amount": 50, "unit": "g" },
+      { "ingredientId": "ing_036", "ingredientName": "mogyoró", "amount": 20, "unit": "g" },
+      { "ingredientId": "ing_021", "ingredientName": "paradicsom", "amount": 1, "unit": "db" }
+    ],
+    "steps": [
+      "Főzd meg a zabkását (vagy rizst) vízben.",
+      "Tálald friss gyümölcsökkel és magvakkal.",
+      "Ízesítsd ízlés szerint."
+    ],
+    "ownerId": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "isPublic": true,
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  }
+]

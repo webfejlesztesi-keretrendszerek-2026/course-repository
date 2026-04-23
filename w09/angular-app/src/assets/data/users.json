@@ -1,0 +1,17 @@
+[
+  {
+    "uid": "Vd07pcOiOBcGzEo2X45KL5tx6NA3",
+    "name": "Minta Felhasználó",
+    "email": "demo@local",
+    "avatarUrl": null,
+    "preferences": {
+      "diet": ["vegetáriánus"],
+      "dailyCalorieGoal": 2000,
+      "householdSize": 4,
+      "measurementSystem": "metric",
+      "theme": "light"
+    },
+    "createdAt": "2026-03-31T00:00:00.000Z",
+    "updatedAt": "2026-03-31T00:00:00.000Z"
+  }
+]

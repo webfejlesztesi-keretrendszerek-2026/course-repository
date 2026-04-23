@@ -1,0 +1,6 @@
+<div class="shopping-item" [class.checked]="item?.checked">
+	<input id="chk-{{item?.id}}" class="item-checkbox" type="checkbox" [checked]="item?.checked" (change)="onToggle()" [attr.aria-label]="item?.ingredientName + ' kipipálása'">
+	<label for="chk-{{item?.id}}" class="item-name">{{ item?.ingredientName }}</label>
+	<span class="item-amount" tabindex="0" aria-label="Mennyiség szerkesztése">{{ item?.totalAmount }}<span *ngIf="item?.unit"> {{ item?.unit }}</span></span>
+	<button class="item-delete" (click)="onRemove()" aria-label="Tétel törlése">🗑️</button>
+</div>
