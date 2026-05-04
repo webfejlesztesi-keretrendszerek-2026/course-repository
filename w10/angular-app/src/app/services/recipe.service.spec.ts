@@ -4,18 +4,6 @@ import { RecipeService } from './recipe.service'
 import { ToastService } from './toast.service'
 import { AuthService } from './auth.service'
 
-vi.mock('firebase/firestore', () => ({
-  getDocs: vi.fn(async () => ({ docs: [] })),
-  query: vi.fn(() => ({})),
-  collection: vi.fn(() => ({})),
-  orderBy: vi.fn(() => ({})),
-  getFirestore: vi.fn(() => ({})),
-  doc: vi.fn(() => ({})),
-  onSnapshot: vi.fn(() => ({})),
-  addDoc: vi.fn(async () => ({})),
-  serverTimestamp: vi.fn(() => ({})),
-}))
-
 const MOCK_RECIPES = [
   { id: 'r1', title: 'Apple Pie', description: 'A delicious apple dessert', categoryId: 'cat1', difficulty: 'könnyű', prepTime: 45 },
   { id: 'r2', title: 'Banana Bread', description: 'Sweet bread', categoryId: 'cat2', difficulty: 'közepes', prepTime: 60 },
