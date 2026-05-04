@@ -1,0 +1,79 @@
+<form class="recipe-editor-form" [formGroup]="form" (ngSubmit)="saveRecipe()">
+  <h2>Új recept hozzáadása</h2>
+
+  <label>
+    Név:
+    <input type="text" formControlName="title">
+  </label>
+  <div class="field-error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">Név megadása kötelező.</div>
+
+  <label>
+    Leírás:
+    <textarea formControlName="description"></textarea>
+  </label>
+  <div class="field-error" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">Leírás megadása kötelező.</div>
+
+  <label>
+    Kép URL:
+    <input type="text" formControlName="imageUrl">
+  </label>
+
+  <label>
+    Kategória:
+    <select class="sort-select" formControlName="category">
+      <option value="">-- Válassz --</option>
+      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+    </select>
+  </label>
+
+  <label>
+    Nehézség:
+    <select class="sort-select" formControlName="difficulty">
+      <option value="könnyű">Könnyű</option>
+      <option value="közepes">Közepes</option>
+      <option value="haladó">Haladó</option>
+    </select>
+  </label>
+
+  <label>
+    Elkészítési idő (perc):
+    <input type="number" formControlName="prepTime">
+  </label>
+
+  <label>
+    Kalória (kcal):
+    <input type="number" formControlName="calories">
+  </label>
+
+  <label>
+    Adagok:
+    <input type="number" formControlName="servings">
+  </label>
+
+  <label>
+    Hozzávalók (soronként: név|mennyiség|egység):
+    <textarea formControlName="ingredientsText" placeholder="pl. liszt|200|g"></textarea>
+  </label>
+
+  <label>
+    Lépések (minden sor egy lépés):
+    <textarea formControlName="stepsText"></textarea>
+  </label>
+
+  <fieldset>
+    <legend>Táplálkozás</legend>
+    <label>Fehérje (g): <input type="number" formControlName="protein"></label>
+    <label>Szénhidrát (g): <input type="number" formControlName="carbs"></label>
+    <label>Zsír (g): <input type="number" formControlName="fat"></label>
+  </fieldset>
+
+  <label class="inline">
+    Nyilvános:
+    <input type="checkbox" formControlName="isPublic">
+  </label>
+
+  <div class="editor-actions">
+    <button type="submit" class="action-btn" [disabled]="form.invalid">Mentés</button>
+    <button type="button" class="action-btn" (click)="close.emit()">Mégsem</button>
+  </div>
+</form>

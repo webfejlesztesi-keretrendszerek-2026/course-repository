@@ -1,0 +1,25 @@
+<div class="recipe-detail">
+  <img class="recipe-detail-image" [src]="recipe.imageUrl" [alt]="recipe.title + ' - étel fotó'">
+  <h2>{{ recipe.title }}</h2>
+  <div class="recipe-detail-meta">{{ recipe.prepTime }} perc • {{ recipe.calories }} kcal • {{ recipe.difficulty }}</div>
+  <div class="recipe-detail-desc">{{ recipe.description }}</div>
+
+  <div class="recipe-ingredients" *ngIf="recipe.ingredients?.length">
+    <h3>Hozzávalók</h3>
+    <ul>
+      <li *ngFor="let ing of recipe.ingredients">{{ ing.ingredientName }} — {{ ing.amount }} {{ ing.unit }}</li>
+    </ul>
+  </div>
+
+  <div class="recipe-steps" *ngIf="recipe.steps?.length">
+    <h3>Elkészítés</h3>
+    <ol>
+      <li *ngFor="let s of recipe.steps">{{ s }}</li>
+    </ol>
+  </div>
+</div>
+
+<div class="recipe-actions" *ngIf="auth.isLoggedIn()">
+  <button class="action-btn" (click)="onEdit()">Szerkesztés</button>
+  <button class="action-btn danger" (click)="confirmDelete()">Törlés</button>
+</div>

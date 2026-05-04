@@ -1,0 +1,23 @@
+<div class="recipe-grid">
+  <ng-container *ngFor="let recipe of recipes">
+    <article class="recipe-card" tabindex="0" aria-label="Recept kártya" data-card>
+      <img class="recipe-image" [src]="recipe.imageUrl" [alt]="recipe.title + ' - étel fotó'" loading="lazy">
+      <div class="recipe-title">{{ recipe.title }}</div>
+      <div class="recipe-meta">{{ recipe.prepTime }} perc • {{ recipe.calories }} kcal • {{ recipe.difficulty }}</div>
+      <div class="recipe-desc">{{ recipe.description }}</div>
+      <div class="recipe-actions">
+        <button class="recipe-action-btn" (click)="openRecipe(recipe)">Megtekintés</button>
+        <button class="recipe-action-btn" *ngIf="auth.isLoggedIn()" (click)="edit.emit(recipe)">Szerkesztés</button>
+        <button class="recipe-action-btn" *ngIf="auth.isLoggedIn()">Hozzáadás a menühöz</button>
+      </div>
+    </article>
+  </ng-container>
+</div>
+
+<ng-container *ngIf="selectedRecipe">
+  <div class="dialog-backdrop" (click)="closeRecipe()"></div>
+  <div class="dialog">
+    <app-recipe-detail [recipe]="selectedRecipe" (close)="closeRecipe()" (edit)="handleDetailEdit($event)"></app-recipe-detail>
+    <button class="dialog-close" (click)="closeRecipe()">×</button>
+  </div>
+</ng-container>

@@ -1,0 +1,34 @@
+<form class="search-bar" role="search" (submit)="$event.preventDefault()">
+  <input
+    class="search-input"
+    type="text"
+    placeholder="Keresés a receptek között..."
+    aria-label="Keresés"
+    [(ngModel)]="inputValue"
+    name="search"
+    (ngModelChange)="onInputChange()"
+  >
+  <button class="search-clear" type="button" aria-label="Kereső törlése" (click)="clearSearch()">×</button>
+  <button class="search-button" type="button" (click)="onInputChange()">Keresés</button>
+</form>
+<div class="result-count" aria-live="polite">Találatok: {{ recipeService.resultCount() }}</div>
+<div class="filter-bar" role="group" aria-label="Szűrők">
+  <button
+    *ngFor="let c of chips"
+    class="filter-chip"
+    [class.active]="isChipActive(c)"
+    type="button"
+    (click)="toggleChip(c)"
+  >
+    {{ c }}
+  </button>
+  <button class="filter-clear" type="button" (click)="clearAll()">Mind törlése</button>
+</div>
+<div class="sort-bar">
+  <label for="sort-select">Rendezés:</label>
+  <select class="sort-select" id="sort-select" (change)="setSort($event)">
+    <option value="none">--</option>
+    <option value="titleAsc">Név (A–Z)</option>
+    <option value="titleDesc">Név (Z–A)</option>
+  </select>
+</div>

@@ -1,0 +1,71 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default: deny everything unless a more specific rule allows it.
+    // Alapértelmezett: mindent tiltunk, külön szabályok engedélyeznek kivételesen.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // users/{userId}
+    // A felhasználó csak a saját profilját olvashatja/szerkesztheti/törölheti.
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId; // csak saját olvasás
+      allow create: if request.auth != null && request.auth.uid == userId; // csak saját létrehozás
+      allow update: if request.auth != null && request.auth.uid == userId; // csak saját módosítás
+      allow delete: if request.auth != null && request.auth.uid == userId; // csak saját törlés
+    }
+
+    // categories/{categoryId}
+    // Kategóriák publikusak; létrehozáshoz bejelentkezés szükséges.
+    // Módosítani/törölni csak a létrehozó vagy rendszer (createdBy == null) lehet.
+    match /categories/{categoryId} {
+      allow read: if true; // bárki olvashatja (publikus referencia adatok)
+      allow create: if request.auth != null; // bejelentkezett felhasználó létrehozhat
+      allow update, delete: if request.auth != null
+        && (resource.data.createdBy == null || request.auth.uid == resource.data.createdBy);
+    }
+
+    // ingredients/{ingredientId}
+    // Hozzávalók publikusak olvasásra; csak bejelentkezett user hozhat létre,
+    // és csak a létrehozó módosíthatja/törölheti.
+    match /ingredients/{ingredientId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.createdBy;
+    }
+
+    // recipes/{recipeId}
+    // Publikus receptek bárki számára olvashatók; privát recepteket csak a tulajdonos látja.
+    // Létrehozásnál az ownerId-nek egyeznie kell a bejelentkezett user-rel.
+    match /recipes/{recipeId} {
+      allow read: if resource.data.isPublic == true
+        || (request.auth != null && request.auth.uid == resource.data.ownerId);
+
+      allow create: if request.auth != null
+        && request.auth.uid == request.resource.data.ownerId;
+
+      allow update: if request.auth != null && request.auth.uid == resource.data.ownerId;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.ownerId;
+    }
+
+    // weekly-menu/{menuId}
+    // A kötőjeles kollekció név egyezik a kódban használtal. Csak a tulajdonos férhet hozzá.
+    match /weekly-menu/{menuId} {
+      allow read: if request.auth != null && request.auth.uid == resource.data.ownerId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.ownerId;
+      allow update: if request.auth != null && request.auth.uid == resource.data.ownerId;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.ownerId;
+    }
+
+    // shoppingLists/{listId}
+    // Bevásárlólistákhoz csak a tulajdonos olvasási/írási joga jár.
+    match /shoppingLists/{listId} {
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow update: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+  }
+}
