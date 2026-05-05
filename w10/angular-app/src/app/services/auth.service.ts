@@ -28,7 +28,11 @@ export class AuthService {
   constructor(private toast: ToastService) {
     this._loading.set(true);
 
-    onAuthStateChanged(auth, async (firebaseUser) => {
+    // Some bundling or runtime environments may expose the auth state
+    // listener either as the modular `onAuthStateChanged` function or as
+    // a method on the `auth` instance (compat layers). Try both forms
+    // to avoid runtime "is not a function" errors in different builds.
+    const setupListener = async (firebaseUser: any) => {
       this._firebaseUser.set(firebaseUser ?? null);
 
       if (firebaseUser) {
@@ -70,7 +74,28 @@ export class AuthService {
       }
 
       this._loading.set(false);
-    });
+    };
+
+    try {
+      if (typeof onAuthStateChanged === 'function') {
+        onAuthStateChanged(auth, setupListener);
+      } else if (auth && typeof (auth as any).onAuthStateChanged === 'function') {
+        // compat-style instance method: auth.onAuthStateChanged(callback)
+        (auth as any).onAuthStateChanged(setupListener);
+      } else {
+        // No listener available (e.g., in test/dummy env) — ensure we
+        // mark loading as finished and keep app consistent.
+        this._firebaseUser.set(null);
+        this._appUser.set(null);
+        this._loading.set(false);
+      }
+    } catch (e) {
+      // If something unexpected happens, surface an error via signals
+      // but avoid throwing so the app UI can render in test/dev.
+      const msg = (e as Error).message || 'Auth listener initialization failed.';
+      this._error.set(msg);
+      this._loading.set(false);
+    }
 
     // Test helper: when running under Cypress, expose a function to set
     // the authenticated user directly from the browser test harness. This is
