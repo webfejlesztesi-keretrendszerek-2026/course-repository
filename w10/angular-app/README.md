@@ -36,6 +36,24 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+## Deploy
+
+To deploy the built application to Firebase Hosting:
+
+1. Build a production bundle:
+
+```bash
+npm run build:prod
+```
+
+2. Deploy to Firebase Hosting:
+
+```bash
+npm run deploy
+```
+
+Make sure you are logged in with the Firebase CLI and have selected the correct Firebase project. After deployment, your app will be available at the Firebase Hosting URL (paste your public URL here).
+
 ## Running unit tests
 
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:

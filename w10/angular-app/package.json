@@ -5,8 +5,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test", 
+    "e2e-test": "npx cypress run --headed --browser electron",
+    "deploy": "npm run build:prod && firebase deploy --only hosting"
   },
   "private": true,
   "packageManager": "npm@10.9.2",

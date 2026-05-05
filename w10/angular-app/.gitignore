@@ -39,6 +39,12 @@ testem.log
 /typings
 __screenshots__/
 
+# Build output
+dist/
+
+# Firebase local files
+.firebase/
+
 # System files
 .DS_Store
 Thumbs.db
