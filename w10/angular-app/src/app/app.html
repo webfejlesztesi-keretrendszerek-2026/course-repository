@@ -40,6 +40,9 @@
 
 <router-outlet></router-outlet>
 
+<!-- Test helpers: indicate auth-ready state and expose dashboard selector for Cypress -->
+<div *ngIf="authService.isLoggedIn()" data-cy="auth-ready" style="display:none"></div>
+
 <!-- Bottom tabbar for small mobile devices -->
 <nav class="bottom-tabbar" role="navigation" aria-label="Fő navigáció">
   <a routerLink="/recipes" routerLinkActive="active" (click)="closeMenu()">

@@ -71,6 +71,36 @@ export class AuthService {
 
       this._loading.set(false);
     });
+
+    // Test helper: when running under Cypress, expose a function to set
+    // the authenticated user directly from the browser test harness. This is
+    // only active in test runs and does not affect normal runtime.
+    try {
+      const w = window as any
+      if (w && w.Cypress) {
+        // if a pre-provided test user exists on window, apply it now
+        if (w.__CYPRESS_TEST_USER) {
+          const u = w.__CYPRESS_TEST_USER
+          this._firebaseUser.set({ uid: u.uid, email: u.email, displayName: u.name } as any)
+          this._appUser.set({ uid: u.uid, name: u.name, email: u.email, avatarUrl: null, preferences: { diet: [], dailyCalorieGoal: 2000, householdSize: 1, measurementSystem: 'metric', theme: 'light' }, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() })
+          this._loading.set(false)
+        }
+
+        // expose a setter that tests can call: window.__cypress_setAuthUser({uid,name,email})
+        w.__cypress_setAuthUser = (u: { uid: string; name?: string; email?: string } | null) => {
+          if (!u) {
+            this._firebaseUser.set(null)
+            this._appUser.set(null)
+            return
+          }
+
+          this._firebaseUser.set({ uid: u.uid, email: u.email || '', displayName: u.name || u.uid } as any)
+          this._appUser.set({ uid: u.uid, name: u.name || u.uid, email: u.email || '', avatarUrl: null, preferences: { diet: [], dailyCalorieGoal: 2000, householdSize: 1, measurementSystem: 'metric', theme: 'light' }, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() })
+        }
+      }
+    } catch (e) {
+      // ignore in non-browser environments
+    }
   }
 
   public async register(name: string, email: string, password: string): Promise<void> {
