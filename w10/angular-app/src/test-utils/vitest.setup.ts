@@ -32,6 +32,7 @@ try {
           serverTimestamp: () => ({}),
           doc: () => ({}),
           getDoc: async () => ({ exists: () => false, data: () => null }),
+          setDoc: async () => {},
           updateDoc: async () => {},
           deleteDoc: async () => {},
           onSnapshot: (_q: any, _next?: any) => () => {},
@@ -70,6 +71,7 @@ vi.mock('firebase/firestore', () => {
     serverTimestamp: () => new Date().toISOString(),
     doc: (..._args: any[]) => ({ _mockDoc: true }),
     getDoc: async (_ref: any) => ({ exists: () => false, id: null, data: () => null }),
+    setDoc: async () => {},
     updateDoc: async () => {},
     deleteDoc: async () => {},
     onSnapshot: (_q: any, _next?: any, _err?: any) => {
@@ -121,6 +123,7 @@ vi.mock('@firebase/firestore', () => {
     serverTimestamp: () => new Date().toISOString(),
     doc: (..._args: any[]) => ({ _mockDoc: true }),
     getDoc: async (_ref: any) => ({ exists: () => false, id: null, data: () => null }),
+    setDoc: async () => {},
     updateDoc: async () => {},
     deleteDoc: async () => {},
     onSnapshot: (_q: any, _next?: any, _err?: any) => {
@@ -143,6 +146,7 @@ const simpleFsMock = () => ({
   serverTimestamp: () => ({}),
   doc: () => ({}),
   getDoc: async () => ({ exists: () => false, data: () => null }),
+  setDoc: async () => {},
   updateDoc: async () => {},
   deleteDoc: async () => {},
   onSnapshot: (_q: any, _next?: any) => () => {},

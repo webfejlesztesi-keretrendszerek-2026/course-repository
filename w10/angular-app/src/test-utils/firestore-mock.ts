@@ -8,7 +8,8 @@ export async function addDoc() { return {}; }
 export function serverTimestamp() { return new Date().toISOString(); }
 export function doc() { return {}; }
 export async function getDoc() { return { exists: () => false, data: () => null }; }
+export async function setDoc() { }
 export async function updateDoc() { }
 export async function deleteDoc() { }
 export function onSnapshot(_q:any, _next?:any) { return () => {}; }
-export default { getFirestore, collection, query, orderBy, where, getDocs, addDoc, serverTimestamp, doc, getDoc, updateDoc, deleteDoc, onSnapshot };
+export default { getFirestore, collection, query, orderBy, where, getDocs, addDoc, serverTimestamp, doc, getDoc, setDoc, updateDoc, deleteDoc, onSnapshot };
